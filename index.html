@@ -4,13 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>75 gifted</title>
+
+  <!-- app-ish meta -->
+  <meta name="theme-color" content="#eda8ee" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- optional share preview (works best if you upload social.png later) -->
+  <meta property="og:title" content="75 gifted" />
+  <meta property="og:description" content="daily discipline + god-led execution. track your ascension." />
+  <meta property="og:image" content="social.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- manifest placeholder (we set it dynamically in js so you don’t have to create a file) -->
+  <link rel="manifest" id="manifest-link" href="#" />
+
+  <!-- optional icons (works if you upload these files later) -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="icon" type="image/png" href="icon-192.png" />
+
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     html, body { height:100%; width:100%; }
     body{
-      font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: linear-gradient(135deg, #e2f2aa 0%, #476313 100%);
-      color:#1a1a1a;
+      color:#121212;
     }
 
     /* splash */
@@ -22,21 +46,58 @@
       padding:24px;
       z-index:2000;
       background: linear-gradient(135deg, #e2f2aa 0%, #476313 100%);
+      overflow:hidden;
     }
     .splash-screen.active{ display:flex; }
 
+    /* animated background orb */
+    .splash-orb{
+      position:absolute;
+      width:360px;
+      height:360px;
+      border-radius:999px;
+      filter: blur(38px);
+      opacity:0.55;
+      animation: floaty 6.5s ease-in-out infinite;
+      background:
+        radial-gradient(circle at 30% 30%, #eda8ee, transparent 60%),
+        radial-gradient(circle at 70% 70%, #ebfc72, transparent 60%);
+      z-index:1;
+    }
+    @keyframes floaty{
+      0% { transform: translate(-30px, 10px) scale(1); }
+      50% { transform: translate(40px, -30px) scale(1.06); }
+      100% { transform: translate(-30px, 10px) scale(1); }
+    }
+
+    /* optional canva animation background */
+    .splash-video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:0.35;
+      z-index:0;
+      display:none; /* we turn it on only if it loads */
+    }
+
     .splash-card{
-      width:100%; max-width:420px;
+      width:100%;
+      max-width:420px;
       background: rgba(255,255,255,0.92);
       border-radius:20px;
       padding:28px;
       text-align:center;
       box-shadow:0 12px 40px rgba(0,0,0,0.18);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
+      position:relative;
+      z-index:2;
     }
     .splash-title{
-      font-size:34px; font-weight:800;
-      letter-spacing:1px;
+      font-size:34px;
+      font-weight:900;
+      letter-spacing:-1px;
       text-transform:lowercase;
       color:#111;
     }
@@ -46,23 +107,42 @@
       color:#555;
       text-transform:lowercase;
       line-height:1.5;
+      font-weight:700;
+    }
+    .splash-actions{
+      display:flex;
+      gap:10px;
+      margin-top:18px;
     }
     .splash-btn{
-      width:100%;
-      margin-top:20px;
+      flex:1;
       padding:16px;
-      background:#eda8ee;
-      color:#fff;
       border:none;
       border-radius:14px;
-      font-size:16px;
-      font-weight:800;
+      font-size:15px;
+      font-weight:900;
       text-transform:lowercase;
       cursor:pointer;
-      box-shadow:0 6px 18px rgba(237,168,238,0.35);
-      transition:transform .15s, background .15s;
+      transition:transform .15s, background .15s, opacity .15s;
     }
-    .splash-btn:hover{ transform: translateY(-1px); background:#d88dd9; }
+    .splash-btn.primary{
+      background:#eda8ee;
+      color:#fff;
+      box-shadow:0 6px 18px rgba(237,168,238,0.35);
+    }
+    .splash-btn.primary:hover{
+      transform: translateY(-1px);
+      background:#d88dd9;
+    }
+    .splash-btn.secondary{
+      background:#111;
+      color:#fff;
+      opacity:0.92;
+    }
+    .splash-btn.secondary:hover{
+      transform: translateY(-1px);
+      opacity:1;
+    }
 
     /* app shell */
     .app-container{
@@ -81,8 +161,8 @@
     }
     .header h1{
       font-size:22px;
-      font-weight:800;
-      letter-spacing:1px;
+      font-weight:900;
+      letter-spacing:-1px;
       text-transform:lowercase;
       color:#eda8ee;
     }
@@ -91,6 +171,7 @@
       font-size:12px;
       color:#777;
       text-transform:lowercase;
+      font-weight:700;
     }
 
     .tab-nav{
@@ -104,12 +185,13 @@
       background:none;
       border:none;
       font-size:13px;
-      font-weight:700;
+      font-weight:900;
       text-transform:lowercase;
       color:#888;
       cursor:pointer;
       transition:all .2s;
       border-bottom:2px solid transparent;
+      letter-spacing:-0.2px;
     }
     .tab-button.active{
       color:#eda8ee;
@@ -129,7 +211,6 @@
       to{ opacity:1; transform:translateY(0); }
     }
 
-    /* cards */
     .card{
       background:#fff;
       border-radius:16px;
@@ -138,7 +219,7 @@
       box-shadow:0 4px 12px rgba(0,0,0,0.06);
     }
 
-    /* today top */
+    /* today */
     .streak-display{
       position:relative;
       text-align:center;
@@ -154,7 +235,8 @@
       background:#f3f4f6;
       padding:6px 10px;
       border-radius:8px;
-      font-weight:800;
+      font-weight:900;
+      letter-spacing:-0.2px;
     }
     .countdown-timer.urgent{
       background:#ffebee;
@@ -165,6 +247,7 @@
       font-weight:900;
       color:#eda8ee;
       line-height:1;
+      letter-spacing:-1px;
     }
     .streak-label{
       font-size:12px;
@@ -172,23 +255,22 @@
       color:#888;
       margin-top:6px;
       letter-spacing:1px;
-      font-weight:700;
+      font-weight:800;
     }
     .tasks-left{
       margin-top:10px;
       font-size:13px;
-      color:#333;
+      color:#222;
       text-transform:lowercase;
-      font-weight:800;
+      font-weight:900;
     }
-
     .date-display{
       text-align:center;
       font-size:14px;
       color:#666;
       text-transform:lowercase;
       margin:10px 0 16px;
-      font-weight:700;
+      font-weight:800;
     }
 
     /* checklist */
@@ -208,7 +290,7 @@
       transition:all .15s;
       position:relative;
       margin-right:14px;
-      flex: 0 0 auto;
+      flex:0 0 auto;
     }
     .checkbox:checked{
       background:#eda8ee;
@@ -228,8 +310,9 @@
       font-size:15px;
       color:#222;
       text-transform:lowercase;
-      font-weight:700;
+      font-weight:800;
       line-height:1.25;
+      letter-spacing:-0.2px;
     }
     .meta{
       font-size:12px;
@@ -258,7 +341,7 @@
       color:#888;
       margin:10px 0 12px;
       text-transform:lowercase;
-      font-weight:700;
+      font-weight:800;
     }
 
     .end-day-button{
@@ -274,20 +357,15 @@
       cursor:pointer;
       transition:all .15s;
       box-shadow:0 4px 12px rgba(237,168,238,0.3);
+      letter-spacing:-0.2px;
     }
     .end-day-button:hover{
       background:#d88dd9;
       transform:translateY(-1px);
       box-shadow:0 6px 16px rgba(237,168,238,0.4);
     }
-    .end-day-button:disabled{
-      background:#cfcfcf;
-      cursor:not-allowed;
-      box-shadow:none;
-      transform:none;
-    }
 
-    /* chart */
+    /* chart + stats */
     canvas{ width:100%; height:190px; display:block; }
     .stats-grid{
       display:grid;
@@ -306,14 +384,15 @@
       font-weight:900;
       color:#eda8ee;
       line-height:1.1;
+      letter-spacing:-1px;
     }
     .stat-label{
       font-size:11px;
       text-transform:lowercase;
       color:#888;
       margin-top:4px;
-      font-weight:800;
-      letter-spacing:.5px;
+      font-weight:900;
+      letter-spacing:0.4px;
     }
 
     /* settings */
@@ -324,7 +403,8 @@
       text-transform:lowercase;
       color:#888;
       margin-bottom:8px;
-      font-weight:800;
+      font-weight:900;
+      letter-spacing:-0.2px;
     }
     input[type="text"], input[type="number"], input[type="time"], input[type="date"]{
       width:100%;
@@ -346,6 +426,7 @@
       border-radius:10px;
       text-align:center;
       text-transform:lowercase;
+      letter-spacing:-0.2px;
     }
 
     .toggle-wrapper{
@@ -387,6 +468,7 @@
       font-weight:900;
       text-transform:lowercase;
       transition:all .15s;
+      letter-spacing:-0.2px;
     }
     .calendar-link:hover{
       background:#eda8ee;
@@ -403,7 +485,7 @@
       color:#eda8ee;
       margin-bottom:14px;
       text-align:center;
-      letter-spacing:.5px;
+      letter-spacing:-1px;
     }
     .rules-card h3{
       font-size:15px;
@@ -412,16 +494,18 @@
       color:#222;
       margin-top:14px;
       margin-bottom:8px;
+      letter-spacing:-0.2px;
     }
     .rules-card p, .rules-card li{
       font-size:14px;
       color:#555;
       text-transform:lowercase;
-      font-weight:650;
+      font-weight:700;
+      letter-spacing:-0.1px;
     }
     .rules-card ol{ margin-left:18px; }
 
-    /* overlay modal */
+    /* modal */
     .message-overlay{
       position:fixed;
       inset:0;
@@ -443,8 +527,8 @@
       box-shadow:0 10px 30px rgba(0,0,0,.25);
     }
     .message-icon{ font-size:46px; margin-bottom:14px; }
-    .message-title{ font-size:18px; font-weight:900; color:#222; text-transform:lowercase; }
-    .message-text{ margin-top:8px; font-size:14px; color:#555; line-height:1.45; text-transform:lowercase; }
+    .message-title{ font-size:18px; font-weight:900; color:#222; text-transform:lowercase; letter-spacing:-0.6px; }
+    .message-text{ margin-top:8px; font-size:14px; color:#555; line-height:1.45; text-transform:lowercase; font-weight:700; }
     .message-btn{
       width:100%;
       margin-top:18px;
@@ -457,6 +541,7 @@
       text-transform:lowercase;
       background:#eda8ee;
       color:#fff;
+      letter-spacing:-0.2px;
     }
     .message-btn:hover{ background:#d88dd9; }
   </style>
@@ -465,10 +550,21 @@
 <body>
   <!-- splash -->
   <div class="splash-screen" id="splash-screen">
+    <!-- optional video bg (auto shows if splash.mp4 exists) -->
+    <video class="splash-video" id="splash-video" autoplay muted loop playsinline>
+      <source src="splash.mp4" type="video/mp4">
+    </video>
+
+    <div class="splash-orb" aria-hidden="true"></div>
+
     <div class="splash-card">
       <div class="splash-title">75 gifted</div>
-      <div class="splash-sub">daily discipline + god-led execution. show up for the gift.</div>
-      <button class="splash-btn" id="open-today-btn">open today</button>
+      <div class="splash-sub">daily discipline + god-led execution. track your ascension.</div>
+
+      <div class="splash-actions">
+        <button class="splash-btn primary" id="open-main-btn">open</button>
+        <button class="splash-btn secondary" id="open-settings-btn">setup</button>
+      </div>
     </div>
   </div>
 
@@ -508,7 +604,7 @@
         </div>
 
         <div class="card streak-display">
-          <div class="countdown-timer" id="countdown-timer">--:--</div>
+          <div class="countdown-timer" id="countdown-timer">--:--:--</div>
           <div class="streak-number" id="current-streak">0</div>
           <div class="streak-label">day streak</div>
           <div class="tasks-left" id="tasks-left">7 tasks left</div>
@@ -613,8 +709,9 @@
                 <div class="toggle-slider"></div>
               </div>
             </div>
-            <div style="margin-top:10px; font-size:12px; color:#777; text-transform:lowercase; font-weight:700;">
-              canva can’t do true push notifications reliably. calendar reminders are the free + dependable workaround.
+
+            <div style="margin-top:10px; font-size:12px; color:#777; text-transform:lowercase; font-weight:800;">
+              real push notifications aren’t reliable in a simple web freebie. calendar reminders are the grown solution.
             </div>
 
             <a class="calendar-link" id="wakeup-calendar" target="_blank" rel="noopener noreferrer" href="#">add wakeup reminder to calendar</a>
@@ -668,7 +765,7 @@
   </div>
 
   <script>
-    const APP_DATA_KEY = '75_gifted_data_v2';
+    const APP_DATA_KEY = '75_gifted_data_v3';
 
     const defaultState = {
       currentStreak: 0,
@@ -694,7 +791,7 @@
 
     let appState = structuredClone(defaultState);
 
-    // ---------- utils ----------
+    // ---------- storage ----------
     function saveData(){ localStorage.setItem(APP_DATA_KEY, JSON.stringify(appState)); }
     function loadData(){
       const saved = localStorage.getItem(APP_DATA_KEY);
@@ -704,27 +801,28 @@
       }
     }
 
+    // ---------- date helpers ----------
     function getTodayString(){
       const now = new Date();
       return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
     }
-
     function addDays(dateStr, days){
       const d = new Date(dateStr + 'T00:00:00');
       d.setDate(d.getDate() + days);
       return d.toISOString().slice(0,10);
     }
-
     function formatDate(dateStr){
       const d = new Date(dateStr + 'T00:00:00');
       return d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' }).toLowerCase();
     }
 
+    // ---------- water formula ----------
     function waterTargetOz(){
-      // your formula: half bodyweight + 8 oz for movement
+      // half bodyweight + 8 oz for daily movement
       return Math.round((Number(appState.settings.bodyWeight || 0) / 2) + 8);
     }
 
+    // ---------- modal ----------
     function showModal(icon, title, text){
       document.getElementById('message-icon').textContent = icon;
       document.getElementById('message-title').textContent = title;
@@ -735,6 +833,7 @@
       document.getElementById('message-overlay').classList.remove('active');
     }
 
+    // ---------- splash ----------
     function showSplash(){
       document.getElementById('splash-screen').classList.add('active');
       document.getElementById('app-container').style.display = 'none';
@@ -744,6 +843,21 @@
       document.getElementById('app-container').style.display = 'flex';
     }
 
+    // auto-show video bg only if it loads (so no ugly broken vibe)
+    function initSplashVideo(){
+      const vid = document.getElementById('splash-video');
+      if (!vid) return;
+      vid.addEventListener('canplay', () => {
+        vid.style.display = 'block';
+      });
+      vid.addEventListener('error', () => {
+        vid.style.display = 'none';
+      });
+      // attempt play (some browsers block autoplay unless muted, which we are)
+      vid.play().catch(()=>{ /* ignore */ });
+    }
+
+    // ---------- routing ----------
     function openTab(name){
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -751,7 +865,6 @@
       const tab = document.getElementById(`${name}-tab`);
       if (btn) btn.classList.add('active');
       if (tab) tab.classList.add('active');
-      // redraw chart whenever we land on today
       if (name === 'today') setTimeout(drawChart, 30);
     }
 
@@ -768,7 +881,7 @@
 
       if (appState.today.date === today) return;
 
-      // if last "today" wasn't ended → loss
+      // if last day wasn't ended -> loss
       if (!appState.today.ended){
         appState.history.push({
           date: appState.today.date,
@@ -779,14 +892,14 @@
         appState.currentStreak = 0;
       }
 
-      // if they skipped multiple days, log each missed day as loss
+      // if they skipped multiple days, log each missed day as a loss
       let cursor = addDays(appState.today.date, 1);
       while (cursor !== today){
         appState.history.push({ date: cursor, completed:false, streakAfter:0, notes:'' });
         cursor = addDays(cursor, 1);
       }
 
-      // create fresh today
+      // fresh today
       appState.today = {
         date: today,
         checks: [false,false,false,false,false,false,false],
@@ -796,12 +909,7 @@
       saveData();
     }
 
-    // ---------- countdown + tasks left ----------
-    function updateTasksLeft(){
-      const left = appState.today.checks.filter(v => !v).length;
-      document.getElementById('tasks-left').textContent = `${left} task${left===1?'':'s'} left`;
-    }
-
+    // ---------- countdown (per second) ----------
     function updateBedtimeCountdown(){
       const el = document.getElementById('countdown-timer');
       const [bh, bm] = appState.settings.bedtime.split(':').map(n => parseInt(n,10));
@@ -813,18 +921,21 @@
       const diffMs = bedtime - now;
 
       if (diffMs <= 0){
-        el.textContent = 'past bedtime';
+        el.textContent = '00:00:00';
         el.classList.add('urgent');
         return;
       }
 
-      const mins = Math.floor(diffMs / 60000);
-      const hrs = Math.floor(mins / 60);
-      const rem = mins % 60;
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const hrs = Math.floor(totalSeconds / 3600);
+      const mins = Math.floor((totalSeconds % 3600) / 60);
+      const secs = totalSeconds % 60;
 
-      el.textContent = `${String(hrs).padStart(2,'0')}:${String(rem).padStart(2,'0')}`;
+      el.textContent =
+        `${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
 
-      if (mins <= 60) el.classList.add('urgent');
+      // urgent when <= 60 minutes left
+      if (totalSeconds <= 3600) el.classList.add('urgent');
       else el.classList.remove('urgent');
     }
 
@@ -834,6 +945,12 @@
       const [bh, bm] = appState.settings.bedtime.split(':').map(n => parseInt(n,10));
       const bedtimeMins = bh*60 + bm;
       return currentMins >= (bedtimeMins - 120);
+    }
+
+    // ---------- tasks left ----------
+    function updateTasksLeft(){
+      const left = appState.today.checks.filter(v => !v).length;
+      document.getElementById('tasks-left').textContent = `${left} task${left===1?'':'s'} left`;
     }
 
     // ---------- calendar links ----------
@@ -855,18 +972,14 @@
         const m = String(mins%60).padStart(2,'0');
         return [h,m];
       }
-
-      const [midH, midMin] = hhmm(middayM);
-      const [lapH, lapMin] = hhmm(lastLapM);
-
-      function timeBlock(h, m){
-        return `${String(h).padStart(2,'0')}${String(m).padStart(2,'0')}00`;
-      }
-
+      function timeBlock(h, m){ return `${String(h).padStart(2,'0')}${String(m).padStart(2,'0')}00`; }
       function endBlock(mins){
         const [eh, em] = hhmm(mins + 60);
         return `${eh}${em}00`;
       }
+
+      const [midH, midMin] = hhmm(middayM);
+      const [lapH, lapMin] = hhmm(lastLapM);
 
       const wakeStart = timeBlock(wake[0], wake[1]);
       const wakeEnd   = endBlock(wakeM);
@@ -887,38 +1000,29 @@
         `https://calendar.google.com/calendar/render?action=TEMPLATE&text=75+Gifted:+Last+Lap&details=last+lap.+finish+your+7.&dates=${dateStr}T${lapStart}/${dateStr}T${lapEnd}&recur=RRULE:FREQ=DAILY`;
     }
 
-    // ---------- render ----------
+    // ---------- ui render ----------
     function updateTodayUI(){
-      // streak + date
       document.getElementById('current-streak').textContent = appState.currentStreak;
       document.getElementById('today-date').textContent = formatDate(appState.today.date);
 
-      // stats
       document.getElementById('stat-current').textContent = appState.currentStreak;
       document.getElementById('stat-longest').textContent = appState.longestStreak;
       document.getElementById('stat-wins').textContent = appState.history.filter(h => h.completed).length;
 
-      // water
       document.getElementById('water-target').textContent = `(${waterTargetOz()} oz)`;
 
-      // custom labels
       const gift = (appState.settings.dailyGift || '').trim();
       document.getElementById('gift-label').textContent = gift ? `share your gift: ${gift}` : 'share your gift publicly';
 
       const vices = (appState.settings.vicesText || '').trim();
       document.getElementById('vices-label').textContent = vices ? `no vices: ${vices}` : 'no vices or temptations';
 
-      // checklist
       for (let i=0;i<7;i++){
         document.getElementById(`check-${i}`).checked = !!appState.today.checks[i];
       }
 
-      // notes
       document.getElementById('today-notes').value = appState.today.notes || '';
-
-      // bedtime reminder
-      document.getElementById('bedtime-reminder').textContent =
-        `all seven before bedtime: ${appState.settings.bedtime}`;
+      document.getElementById('bedtime-reminder').textContent = `all seven before bedtime: ${appState.settings.bedtime}`;
 
       updateTasksLeft();
       updateBedtimeCountdown();
@@ -975,7 +1079,7 @@
       const data = appState.history.slice(-75);
       if (data.length === 0){
         ctx.fillStyle = '#888';
-        ctx.font = '14px -apple-system, sans-serif';
+        ctx.font = '14px Montserrat, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('no ascension data yet', width/2, height/2);
         return;
@@ -989,7 +1093,7 @@
       const xStep = chartW / Math.max(data.length-1, 1);
       const yScale = chartH / maxStreak;
 
-      // grid lines + y labels
+      // grid + labels
       ctx.strokeStyle = '#eee';
       ctx.lineWidth = 1;
       for (let i=0;i<=4;i++){
@@ -1001,7 +1105,7 @@
 
         const val = Math.round(maxStreak - (maxStreak/4)*i);
         ctx.fillStyle = '#999';
-        ctx.font = '11px -apple-system, sans-serif';
+        ctx.font = '11px Montserrat, sans-serif';
         ctx.textAlign = 'right';
         ctx.fillText(String(val), padding-8, y+4);
       }
@@ -1038,6 +1142,7 @@
       if (allChecked){
         appState.currentStreak++;
         appState.longestStreak = Math.max(appState.longestStreak, appState.currentStreak);
+
         appState.history.push({
           date: appState.today.date,
           completed: true,
@@ -1050,6 +1155,7 @@
         showModal('🔥', 'day won', `all 7 complete. streak: ${appState.currentStreak}`);
       } else {
         appState.currentStreak = 0;
+
         appState.history.push({
           date: appState.today.date,
           completed: false,
@@ -1062,27 +1168,15 @@
         showModal('💔', 'day lost', 'not all items were completed. streak reset to 0.');
       }
 
-      // reset tomorrow state
-      // (we keep today.ended=true, but next launch/day shift will roll forward)
-      // immediate refresh so UI reflects updated stats + chart
       updateTodayUI();
       updateSettingsUI();
     }
 
     // ---------- events ----------
-    // tabs
     document.querySelectorAll('.tab-button').forEach(btn => {
       btn.addEventListener('click', () => openTab(btn.dataset.tab));
     });
 
-    // splash button
-    document.getElementById('open-today-btn').addEventListener('click', () => {
-      hideSplash();
-      openTab('today');
-      updateTodayUI();
-    });
-
-    // checklist
     for (let i=0;i<7;i++){
       document.getElementById(`check-${i}`).addEventListener('change', (e) => {
         appState.today.checks[i] = e.target.checked;
@@ -1091,13 +1185,11 @@
       });
     }
 
-    // notes
     document.getElementById('today-notes').addEventListener('input', (e) => {
       appState.today.notes = e.target.value;
       saveData();
     });
 
-    // end day
     document.getElementById('end-day-btn').addEventListener('click', () => {
       if (!isWithinBedtimeWindow()){
         showModal('⏳', 'too early', 'you can only end your day within 2 hours of bedtime. come back later.');
@@ -1106,10 +1198,8 @@
       endDay();
     });
 
-    // modal ok
-    document.getElementById('message-ok').addEventListener('click', () => hideModal());
+    document.getElementById('message-ok').addEventListener('click', hideModal);
 
-    // settings inputs
     document.getElementById('start-date').addEventListener('change', (e) => {
       appState.settings.startDate = e.target.value || null;
       saveData();
@@ -1158,7 +1248,6 @@
       updateSettingsUI();
     });
 
-    // finish setup button
     document.getElementById('finish-setup-btn').addEventListener('click', () => {
       const ready = markOnboardedIfReady();
       if (!ready){
@@ -1166,36 +1255,84 @@
         openTab('settings');
         return;
       }
-      showModal('✅', 'setup complete', 'you’re ready. open today + get after it.');
-      // next launches go to splash
+      showModal('✅', 'setup complete', 'you’re ready. hit open and run your day.');
       saveData();
-      showSplash();
+      showSplash(); // back to splash so it feels app-y
     });
 
-    // resize redraw
-    window.addEventListener('resize', () => drawChart());
+    // splash buttons
+    document.getElementById('open-main-btn').addEventListener('click', () => {
+      hideSplash();
+      if (!appState.settings.onboarded){
+        openTab('settings');
+      } else {
+        openTab('today');
+        updateTodayUI();
+      }
+    });
+
+    document.getElementById('open-settings-btn').addEventListener('click', () => {
+      hideSplash();
+      openTab('settings');
+    });
+
+    window.addEventListener('resize', drawChart);
+
+    // ---------- dynamic manifest (so you don’t have to make a file) ----------
+    function setDynamicManifest(){
+      const svg = encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#e2f2aa"/>
+              <stop offset="1" stop-color="#476313"/>
+            </linearGradient>
+          </defs>
+          <rect width="512" height="512" rx="96" fill="url(#g)"/>
+          <circle cx="190" cy="190" r="120" fill="#eda8ee" opacity="0.85"/>
+          <circle cx="330" cy="330" r="120" fill="#ebfc72" opacity="0.85"/>
+          <text x="256" y="290" text-anchor="middle" font-family="Montserrat, Arial" font-size="92" font-weight="900" fill="#111">75</text>
+        </svg>
+      `);
+
+      const iconData = `data:image/svg+xml;charset=utf-8,${svg}`;
+
+      const manifest = {
+        name: "75 gifted",
+        short_name: "75 gifted",
+        start_url: ".",
+        display: "standalone",
+        background_color: "#f8f9fa",
+        theme_color: "#eda8ee",
+        icons: [
+          { src: iconData, sizes: "192x192", type: "image/svg+xml" },
+          { src: iconData, sizes: "512x512", type: "image/svg+xml" }
+        ]
+      };
+
+      const blob = new Blob([JSON.stringify(manifest)], { type: "application/manifest+json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.getElementById("manifest-link");
+      if (link) link.href = url;
+    }
 
     // ---------- boot ----------
     function boot(){
       loadData();
       checkNewDayAndMisses();
 
+      setDynamicManifest();
+      initSplashVideo();
+
       updateSettingsUI();
       updateTodayUI();
 
-      // onboarding routing
-      if (!appState.settings.onboarded){
-        hideSplash();
-        openTab('settings');
-        document.getElementById('header-sub').textContent = 'set it up once. then it’s go time.';
-      } else {
-        showSplash();
-        document.getElementById('header-sub').textContent = 'stay consistent. ascend.';
-      }
+      // always show splash first, every time
+      showSplash();
+      openTab('today');
 
-      // countdown refresh
       updateBedtimeCountdown();
-      setInterval(updateBedtimeCountdown, 60000);
+      setInterval(updateBedtimeCountdown, 1000);
     }
 
     boot();
