@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>75 gifted</title>
+  <title>75 GIFTED</title>
 
-  <!-- app-ish meta -->
-  <meta name="theme-color" content="#eda8ee" />
+  <!-- app meta -->
+  <meta name="theme-color" content="#476313" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-  <!-- optional share preview (works best if you upload social.png later) -->
-  <meta property="og:title" content="75 gifted" />
-  <meta property="og:description" content="daily discipline + god-led execution. track your ascension." />
+  <!-- optional share preview -->
+  <meta property="og:title" content="75 GIFTED" />
+  <meta property="og:description" content="a 75 day spiritual discipline challenge. track your ascension." />
   <meta property="og:image" content="social.png" />
   <meta property="og:type" content="website" />
 
@@ -21,20 +21,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- manifest placeholder (we set it dynamically in js so you don’t have to create a file) -->
   <link rel="manifest" id="manifest-link" href="#" />
-
-  <!-- optional icons (works if you upload these files later) -->
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="icon" type="image/png" href="icon-192.png" />
 
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { height:100%; width:100%; }
+    :root{
+      --bg:#476313;
+      --accent:#e2f2aa;
+      --ink:#0c1203;
+      --card:#3a5310;         /* dark green card */
+      --card2:#2f430c;        /* deeper */
+      --line:rgba(255,255,255,0.10);
+      --muted:rgba(255,255,255,0.70);
+      --muted2:rgba(255,255,255,0.55);
+    }
+
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    html, body{ height:100%; width:100%; }
     body{
-      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #e2f2aa 0%, #476313 100%);
-      color:#121212;
+      font-family:'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #5b7c1a 0%, var(--bg) 70%);
+      color:#fff;
     }
 
     /* splash */
@@ -45,23 +53,21 @@
       justify-content:center;
       padding:24px;
       z-index:2000;
-      background: linear-gradient(135deg, #e2f2aa 0%, #476313 100%);
+      background: linear-gradient(135deg, #5b7c1a 0%, var(--bg) 70%);
       overflow:hidden;
     }
     .splash-screen.active{ display:flex; }
 
-    /* animated background orb */
     .splash-orb{
       position:absolute;
-      width:360px;
-      height:360px;
+      width:380px; height:380px;
       border-radius:999px;
-      filter: blur(38px);
+      filter: blur(40px);
       opacity:0.55;
       animation: floaty 6.5s ease-in-out infinite;
       background:
-        radial-gradient(circle at 30% 30%, #eda8ee, transparent 60%),
-        radial-gradient(circle at 70% 70%, #ebfc72, transparent 60%);
+        radial-gradient(circle at 30% 30%, var(--accent), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.25), transparent 60%);
       z-index:1;
     }
     @keyframes floaty{
@@ -70,27 +76,25 @@
       100% { transform: translate(-30px, 10px) scale(1); }
     }
 
-    /* optional canva animation background */
     .splash-video{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
+      position:absolute; inset:0;
+      width:100%; height:100%;
       object-fit:cover;
-      opacity:0.35;
+      opacity:0.25;
       z-index:0;
-      display:none; /* we turn it on only if it loads */
+      display:none;
     }
 
     .splash-card{
       width:100%;
       max-width:420px;
-      background: rgba(255,255,255,0.92);
+      background: rgba(18,25,6,0.55);
+      border: 1px solid rgba(255,255,255,0.14);
       border-radius:20px;
       padding:28px;
       text-align:center;
-      box-shadow:0 12px 40px rgba(0,0,0,0.18);
-      backdrop-filter: blur(10px);
+      box-shadow:0 12px 40px rgba(0,0,0,0.25);
+      backdrop-filter: blur(12px);
       position:relative;
       z-index:2;
     }
@@ -98,16 +102,16 @@
       font-size:34px;
       font-weight:900;
       letter-spacing:-1px;
-      text-transform:lowercase;
-      color:#111;
+      text-transform:uppercase;
+      color:var(--accent);
     }
     .splash-sub{
       margin-top:10px;
       font-size:14px;
-      color:#555;
+      color:var(--muted);
       text-transform:lowercase;
       line-height:1.5;
-      font-weight:700;
+      font-weight:800;
     }
     .splash-actions{
       display:flex;
@@ -123,26 +127,21 @@
       font-weight:900;
       text-transform:lowercase;
       cursor:pointer;
-      transition:transform .15s, background .15s, opacity .15s;
+      transition:transform .15s, opacity .15s;
+      letter-spacing:-0.2px;
     }
     .splash-btn.primary{
-      background:#eda8ee;
-      color:#fff;
-      box-shadow:0 6px 18px rgba(237,168,238,0.35);
+      background:var(--accent);
+      color:var(--ink);
+      box-shadow:0 8px 18px rgba(226,242,170,0.22);
     }
-    .splash-btn.primary:hover{
-      transform: translateY(-1px);
-      background:#d88dd9;
-    }
+    .splash-btn.primary:hover{ transform: translateY(-1px); opacity:0.95; }
     .splash-btn.secondary{
-      background:#111;
+      background:rgba(255,255,255,0.10);
       color:#fff;
-      opacity:0.92;
+      border:1px solid rgba(255,255,255,0.16);
     }
-    .splash-btn.secondary:hover{
-      transform: translateY(-1px);
-      opacity:1;
-    }
+    .splash-btn.secondary:hover{ transform: translateY(-1px); opacity:0.95; }
 
     /* app shell */
     .app-container{
@@ -150,34 +149,36 @@
       width:100%;
       display:flex;
       flex-direction:column;
-      background:#f8f9fa;
+      background: transparent;
     }
 
     .header{
-      background:#fff;
+      background: rgba(18,25,6,0.45);
+      border-bottom:1px solid rgba(255,255,255,0.10);
       padding:16px 20px 12px;
-      box-shadow:0 2px 8px rgba(0,0,0,0.08);
       text-align:center;
+      backdrop-filter: blur(10px);
     }
     .header h1{
-      font-size:22px;
+      font-size:20px;
       font-weight:900;
       letter-spacing:-1px;
-      text-transform:lowercase;
-      color:#eda8ee;
+      text-transform:uppercase;
+      color:var(--accent);
     }
     .header .sub{
       margin-top:6px;
       font-size:12px;
-      color:#777;
+      color:var(--muted);
       text-transform:lowercase;
-      font-weight:700;
+      font-weight:800;
     }
 
     .tab-nav{
       display:flex;
-      background:#fff;
-      border-bottom:1px solid #e6e6e6;
+      background: rgba(18,25,6,0.35);
+      border-bottom:1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(10px);
     }
     .tab-button{
       flex:1;
@@ -187,15 +188,15 @@
       font-size:13px;
       font-weight:900;
       text-transform:lowercase;
-      color:#888;
+      color:var(--muted2);
       cursor:pointer;
       transition:all .2s;
       border-bottom:2px solid transparent;
       letter-spacing:-0.2px;
     }
     .tab-button.active{
-      color:#eda8ee;
-      border-bottom-color:#eda8ee;
+      color:var(--accent);
+      border-bottom-color:var(--accent);
     }
 
     .content{
@@ -212,47 +213,45 @@
     }
 
     .card{
-      background:#fff;
+      background: linear-gradient(180deg, rgba(58,83,16,0.75), rgba(47,67,12,0.75));
+      border: 1px solid rgba(255,255,255,0.12);
       border-radius:16px;
       padding:20px;
       margin-bottom:16px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.06);
+      box-shadow:0 10px 24px rgba(0,0,0,0.18);
+      backdrop-filter: blur(10px);
     }
 
     /* today */
-    .streak-display{
-      position:relative;
-      text-align:center;
-      padding:22px;
-    }
+    .streak-display{ position:relative; text-align:center; padding:22px; }
     .countdown-timer{
-      position:absolute;
-      top:14px;
-      right:14px;
+      position:absolute; top:14px; right:14px;
       font-size:11px;
-      color:#777;
+      color:var(--muted);
       text-transform:lowercase;
-      background:#f3f4f6;
+      background: rgba(255,255,255,0.10);
       padding:6px 10px;
       border-radius:8px;
       font-weight:900;
       letter-spacing:-0.2px;
     }
     .countdown-timer.urgent{
-      background:#ffebee;
-      color:#c62828;
+      background: rgba(255,80,80,0.18);
+      color:#ffd7d7;
+      border:1px solid rgba(255,120,120,0.25);
     }
+
     .streak-number{
       font-size:56px;
       font-weight:900;
-      color:#eda8ee;
+      color:var(--accent);
       line-height:1;
       letter-spacing:-1px;
     }
     .streak-label{
       font-size:12px;
       text-transform:lowercase;
-      color:#888;
+      color:var(--muted);
       margin-top:6px;
       letter-spacing:1px;
       font-weight:800;
@@ -260,17 +259,47 @@
     .tasks-left{
       margin-top:10px;
       font-size:13px;
-      color:#222;
+      color:#fff;
       text-transform:lowercase;
       font-weight:900;
     }
     .date-display{
       text-align:center;
       font-size:14px;
-      color:#666;
+      color:var(--muted);
       text-transform:lowercase;
       margin:10px 0 16px;
       font-weight:800;
+    }
+
+    canvas{ width:100%; height:190px; display:block; }
+
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+    }
+    .stat-card{
+      background: rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:12px;
+      padding:14px;
+      text-align:center;
+    }
+    .stat-value{
+      font-size:26px;
+      font-weight:900;
+      color:var(--accent);
+      line-height:1.1;
+      letter-spacing:-1px;
+    }
+    .stat-label{
+      font-size:11px;
+      text-transform:lowercase;
+      color:var(--muted);
+      margin-top:4px;
+      font-weight:900;
+      letter-spacing:0.4px;
     }
 
     /* checklist */
@@ -278,37 +307,39 @@
       display:flex;
       align-items:center;
       padding:14px 0;
-      border-bottom:1px solid #f0f0f0;
+      border-bottom:1px solid rgba(255,255,255,0.08);
     }
     .checklist-item:last-child{ border-bottom:none; }
+
     .checkbox{
       appearance:none;
       width:24px; height:24px;
-      border:2px solid #ddd;
+      border:2px solid rgba(255,255,255,0.25);
       border-radius:7px;
       cursor:pointer;
       transition:all .15s;
       position:relative;
       margin-right:14px;
       flex:0 0 auto;
+      background: rgba(0,0,0,0.12);
     }
     .checkbox:checked{
-      background:#eda8ee;
-      border-color:#eda8ee;
+      background:var(--accent);
+      border-color:var(--accent);
     }
     .checkbox:checked::after{
       content:'✓';
       position:absolute;
       top:50%; left:50%;
       transform:translate(-50%,-50%);
-      color:#fff;
+      color:var(--ink);
       font-size:14px;
       font-weight:900;
     }
     .checklist-label{
       flex:1;
       font-size:15px;
-      color:#222;
+      color:#fff;
       text-transform:lowercase;
       font-weight:800;
       line-height:1.25;
@@ -316,7 +347,7 @@
     }
     .meta{
       font-size:12px;
-      color:#eda8ee;
+      color:var(--accent);
       font-weight:900;
       margin-left:8px;
       text-transform:lowercase;
@@ -326,74 +357,58 @@
       width:100%;
       min-height:110px;
       padding:12px;
-      border:1px solid #e0e0e0;
-      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.18);
+      border-radius:12px;
       font-family:inherit;
       font-size:14px;
       resize:vertical;
       outline:none;
+      background: rgba(0,0,0,0.14);
+      color:#fff;
     }
-    textarea:focus{ border-color:#eda8ee; }
+    textarea::placeholder{ color: rgba(255,255,255,0.55); }
+    textarea:focus{ border-color: rgba(226,242,170,0.55); }
 
     .bedtime-reminder{
       text-align:center;
       font-size:12px;
-      color:#888;
+      color:var(--muted);
       margin:10px 0 12px;
       text-transform:lowercase;
       font-weight:800;
     }
 
-    .end-day-button{
+    .btn{
       width:100%;
       padding:16px;
-      background:#eda8ee;
-      color:#fff;
       border:none;
-      border-radius:12px;
-      font-size:16px;
+      border-radius:14px;
+      font-size:15px;
       font-weight:900;
       text-transform:lowercase;
       cursor:pointer;
       transition:all .15s;
-      box-shadow:0 4px 12px rgba(237,168,238,0.3);
       letter-spacing:-0.2px;
     }
-    .end-day-button:hover{
-      background:#d88dd9;
-      transform:translateY(-1px);
-      box-shadow:0 6px 16px rgba(237,168,238,0.4);
+    .btn.primary{
+      background:var(--accent);
+      color:var(--ink);
+      box-shadow:0 10px 22px rgba(226,242,170,0.18);
     }
+    .btn.primary:hover{ transform:translateY(-1px); opacity:0.96; }
 
-    /* chart + stats */
-    canvas{ width:100%; height:190px; display:block; }
-    .stats-grid{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:12px;
+    .btn.secondary{
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.16);
+      color:#fff;
     }
-    .stat-card{
-      background:#fff;
-      border-radius:12px;
-      padding:14px;
-      text-align:center;
-      box-shadow:0 4px 12px rgba(0,0,0,0.06);
+    .btn.secondary:hover{ transform:translateY(-1px); opacity:0.96; }
+
+    .btn-row{
+      display:flex;
+      gap:10px;
     }
-    .stat-value{
-      font-size:26px;
-      font-weight:900;
-      color:#eda8ee;
-      line-height:1.1;
-      letter-spacing:-1px;
-    }
-    .stat-label{
-      font-size:11px;
-      text-transform:lowercase;
-      color:#888;
-      margin-top:4px;
-      font-weight:900;
-      letter-spacing:0.4px;
-    }
+    .btn-row .btn{ width:auto; flex:1; }
 
     /* settings */
     .form-group{ margin-bottom:18px; }
@@ -401,7 +416,7 @@
       display:block;
       font-size:13px;
       text-transform:lowercase;
-      color:#888;
+      color:var(--muted);
       margin-bottom:8px;
       font-weight:900;
       letter-spacing:-0.2px;
@@ -409,21 +424,24 @@
     input[type="text"], input[type="number"], input[type="time"], input[type="date"]{
       width:100%;
       padding:12px;
-      border:1px solid #e0e0e0;
-      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.18);
+      border-radius:12px;
       font-family:inherit;
       font-size:14px;
       outline:none;
+      background: rgba(0,0,0,0.14);
+      color:#fff;
     }
-    input:focus{ border-color:#eda8ee; }
+    input:focus{ border-color: rgba(226,242,170,0.55); }
 
     .computed-value{
       font-size:18px;
       font-weight:900;
-      color:#eda8ee;
+      color:var(--accent);
       padding:12px;
-      background:#faf5fb;
-      border-radius:10px;
+      background: rgba(0,0,0,0.14);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:12px;
       text-align:center;
       text-transform:lowercase;
       letter-spacing:-0.2px;
@@ -438,13 +456,14 @@
     .toggle{
       position:relative;
       width:48px; height:28px;
-      background:#ccc;
+      background: rgba(255,255,255,0.18);
       border-radius:14px;
       cursor:pointer;
       transition:background .15s;
       flex:0 0 auto;
+      border:1px solid rgba(255,255,255,0.12);
     }
-    .toggle.active{ background:#eda8ee; }
+    .toggle.active{ background: rgba(226,242,170,0.55); border-color: rgba(226,242,170,0.55); }
     .toggle-slider{
       position:absolute;
       top:3px; left:3px;
@@ -453,16 +472,17 @@
       border-radius:50%;
       transition:transform .15s;
     }
-    .toggle.active .toggle-slider{ transform:translateX(20px); }
+    .toggle.active .toggle-slider{ transform:translateX(20px); background: var(--accent); }
 
     .calendar-link{
       display:block;
       padding:14px;
       margin-top:10px;
-      background:#faf5fb;
-      border-radius:10px;
+      background: rgba(0,0,0,0.14);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:12px;
       text-decoration:none;
-      color:#eda8ee;
+      color:var(--accent);
       font-size:14px;
       text-align:center;
       font-weight:900;
@@ -471,34 +491,33 @@
       letter-spacing:-0.2px;
     }
     .calendar-link:hover{
-      background:#eda8ee;
-      color:#fff;
+      background: rgba(226,242,170,0.18);
       transform:translateY(-1px);
     }
 
     /* rules */
     .rules-card{ line-height:1.7; }
     .rules-card h2{
-      font-size:22px;
+      font-size:20px;
       font-weight:900;
-      text-transform:lowercase;
-      color:#eda8ee;
+      text-transform:uppercase;
+      color:var(--accent);
       margin-bottom:14px;
       text-align:center;
       letter-spacing:-1px;
     }
     .rules-card h3{
-      font-size:15px;
+      font-size:14px;
       font-weight:900;
       text-transform:lowercase;
-      color:#222;
+      color:#fff;
       margin-top:14px;
       margin-bottom:8px;
       letter-spacing:-0.2px;
     }
     .rules-card p, .rules-card li{
       font-size:14px;
-      color:#555;
+      color:var(--muted);
       text-transform:lowercase;
       font-weight:700;
       letter-spacing:-0.1px;
@@ -506,61 +525,128 @@
     .rules-card ol{ margin-left:18px; }
 
     /* modal */
-    .message-overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.5);
+    .overlay{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.55);
       display:none;
       align-items:center;
       justify-content:center;
       z-index:3000;
       padding:20px;
     }
-    .message-overlay.active{ display:flex; }
-    .message-box{
+    .overlay.active{ display:flex; }
+
+    .modal{
       width:100%;
-      max-width:340px;
-      background:#fff;
+      max-width:380px;
+      background: rgba(18,25,6,0.75);
+      border: 1px solid rgba(255,255,255,0.14);
       border-radius:18px;
-      padding:26px;
+      padding:22px;
       text-align:center;
-      box-shadow:0 10px 30px rgba(0,0,0,.25);
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+      backdrop-filter: blur(12px);
     }
-    .message-icon{ font-size:46px; margin-bottom:14px; }
-    .message-title{ font-size:18px; font-weight:900; color:#222; text-transform:lowercase; letter-spacing:-0.6px; }
-    .message-text{ margin-top:8px; font-size:14px; color:#555; line-height:1.45; text-transform:lowercase; font-weight:700; }
-    .message-btn{
-      width:100%;
-      margin-top:18px;
-      padding:12px;
-      border:none;
-      border-radius:12px;
-      font-size:14px;
+    .modal .icon{ font-size:44px; margin-bottom:10px; }
+    .modal .title{
+      font-size:16px;
       font-weight:900;
-      cursor:pointer;
-      text-transform:lowercase;
-      background:#eda8ee;
       color:#fff;
-      letter-spacing:-0.2px;
+      text-transform:lowercase;
+      letter-spacing:-0.6px;
     }
-    .message-btn:hover{ background:#d88dd9; }
+    .modal .text{
+      margin-top:8px;
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.45;
+      text-transform:lowercase;
+      font-weight:700;
+    }
+
+    /* share overlay + share card */
+    .share-card{
+      width:100%;
+      max-width:420px;
+      background: linear-gradient(135deg, #5b7c1a 0%, var(--bg) 70%);
+      border-radius:20px;
+      border: 1px solid rgba(255,255,255,0.14);
+      padding:18px;
+      text-align:left;
+    }
+    .share-header{
+      text-transform:uppercase;
+      color:var(--accent);
+      font-weight:900;
+      letter-spacing:-0.6px;
+      font-size:14px;
+      margin-bottom:10px;
+    }
+    .share-sub{
+      color:rgba(255,255,255,0.85);
+      font-weight:800;
+      font-size:12px;
+      margin-top:2px;
+      text-transform:lowercase;
+    }
+    .share-kpis{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin:10px 0 12px;
+    }
+    .share-kpi{
+      background: rgba(0,0,0,0.18);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:14px;
+      padding:10px;
+      text-align:center;
+    }
+    .share-kpi .v{
+      color:var(--accent);
+      font-weight:900;
+      font-size:18px;
+      letter-spacing:-0.8px;
+    }
+    .share-kpi .l{
+      color:rgba(255,255,255,0.75);
+      font-weight:900;
+      font-size:10px;
+      text-transform:lowercase;
+      margin-top:2px;
+    }
+    .share-rules{
+      margin-top:12px;
+      font-size:10px;
+      line-height:1.4;
+      color:rgba(255,255,255,0.75);
+      text-transform:lowercase;
+      font-weight:800;
+      border-top:1px solid rgba(255,255,255,0.14);
+      padding-top:10px;
+    }
+    .share-canvas{
+      width:100%;
+      height:220px;
+      display:block;
+      border-radius:14px;
+      background: rgba(0,0,0,0.18);
+      border:1px solid rgba(255,255,255,0.10);
+    }
   </style>
 </head>
 
 <body>
   <!-- splash -->
   <div class="splash-screen" id="splash-screen">
-    <!-- optional video bg (auto shows if splash.mp4 exists) -->
     <video class="splash-video" id="splash-video" autoplay muted loop playsinline>
       <source src="splash.mp4" type="video/mp4">
     </video>
-
     <div class="splash-orb" aria-hidden="true"></div>
 
     <div class="splash-card">
-      <div class="splash-title">75 gifted</div>
+      <div class="splash-title">75 GIFTED</div>
       <div class="splash-sub">daily discipline + god-led execution. track your ascension.</div>
-
       <div class="splash-actions">
         <button class="splash-btn primary" id="open-main-btn">open</button>
         <button class="splash-btn secondary" id="open-settings-btn">setup</button>
@@ -571,8 +657,8 @@
   <!-- app -->
   <div class="app-container" id="app-container">
     <div class="header">
-      <h1>75 gifted</h1>
-      <div class="sub" id="header-sub">stay consistent. ascend.</div>
+      <h1>75 GIFTED</h1>
+      <div class="sub" id="header-sub">stay gifted.</div>
     </div>
 
     <nav class="tab-nav">
@@ -661,7 +747,11 @@
         </div>
 
         <div class="bedtime-reminder" id="bedtime-reminder"></div>
-        <button class="end-day-button" id="end-day-btn">end day</button>
+
+        <div class="btn-row" style="margin-bottom:10px;">
+          <button class="btn secondary" id="share-progress-btn">share today</button>
+          <button class="btn primary" id="end-day-btn">end day</button>
+        </div>
       </div>
 
       <!-- settings -->
@@ -710,8 +800,8 @@
               </div>
             </div>
 
-            <div style="margin-top:10px; font-size:12px; color:#777; text-transform:lowercase; font-weight:800;">
-              real push notifications aren’t reliable in a simple web freebie. calendar reminders are the grown solution.
+            <div style="margin-top:10px; font-size:12px; color:rgba(255,255,255,0.70); text-transform:lowercase; font-weight:800;">
+              for a free web app, calendar reminders are the reliable option.
             </div>
 
             <a class="calendar-link" id="wakeup-calendar" target="_blank" rel="noopener noreferrer" href="#">add wakeup reminder to calendar</a>
@@ -720,15 +810,13 @@
           </div>
         </div>
 
-        <button class="end-day-button" id="finish-setup-btn" style="background:#111; box-shadow:none;">
-          finish setup
-        </button>
+        <button class="btn secondary" id="finish-setup-btn">finish setup</button>
       </div>
 
       <!-- rules -->
       <div id="rules-tab" class="tab-content">
         <div class="card rules-card">
-          <h2>the 75 gifted challenge</h2>
+          <h2>75 GIFTED</h2>
 
           <h3>daily mission</h3>
           <p>complete all 7 items before bedtime:</p>
@@ -755,22 +843,65 @@
   </div>
 
   <!-- modal -->
-  <div class="message-overlay" id="message-overlay">
-    <div class="message-box">
-      <div class="message-icon" id="message-icon">✓</div>
-      <div class="message-title" id="message-title">ok</div>
-      <div class="message-text" id="message-text">message</div>
-      <button class="message-btn" id="message-ok">continue</button>
+  <div class="overlay" id="message-overlay">
+    <div class="modal">
+      <div class="icon" id="message-icon">✓</div>
+      <div class="title" id="message-title">ok</div>
+      <div class="text" id="message-text">message</div>
+      <div style="margin-top:14px;">
+        <button class="btn primary" id="message-ok">continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- share overlay -->
+  <div class="overlay" id="share-overlay">
+    <div class="modal" style="max-width:460px; text-align:left;">
+      <div class="share-card" id="share-card">
+        <div class="share-header">75 GIFTED, a 75 day spiritual discipline challenge</div>
+        <div class="share-sub" id="share-date"></div>
+
+        <canvas class="share-canvas" id="share-canvas"></canvas>
+
+        <div class="share-kpis">
+          <div class="share-kpi">
+            <div class="v" id="share-current">0</div>
+            <div class="l">current</div>
+          </div>
+          <div class="share-kpi">
+            <div class="v" id="share-longest">0</div>
+            <div class="l">longest</div>
+          </div>
+          <div class="share-kpi">
+            <div class="v" id="share-left">0</div>
+            <div class="l">tasks left</div>
+          </div>
+        </div>
+
+        <div class="share-rules">
+          rules: complete all 7 items before bedtime. within 2 hours of bedtime press “end day.”
+          all checked = win + streak rises. missing any = loss + reset to 0. no pausing.
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:12px;">
+        <button class="btn secondary" id="download-share-btn">download png</button>
+        <button class="btn primary" id="native-share-btn">share</button>
+      </div>
+
+      <div style="margin-top:10px;">
+        <button class="btn secondary" id="close-share-btn">close</button>
+      </div>
     </div>
   </div>
 
   <script>
-    const APP_DATA_KEY = '75_gifted_data_v3';
+    const APP_DATA_KEY = '75_gifted_data_v5';
 
     const defaultState = {
       currentStreak: 0,
       longestStreak: 0,
-      history: [], // {date, completed, streakAfter, notes}
+      history: [],
       settings: {
         onboarded: false,
         startDate: null,
@@ -791,7 +922,6 @@
 
     let appState = structuredClone(defaultState);
 
-    // ---------- storage ----------
     function saveData(){ localStorage.setItem(APP_DATA_KEY, JSON.stringify(appState)); }
     function loadData(){
       const saved = localStorage.getItem(APP_DATA_KEY);
@@ -801,7 +931,6 @@
       }
     }
 
-    // ---------- date helpers ----------
     function getTodayString(){
       const now = new Date();
       return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
@@ -816,24 +945,18 @@
       return d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' }).toLowerCase();
     }
 
-    // ---------- water formula ----------
     function waterTargetOz(){
-      // half bodyweight + 8 oz for daily movement
       return Math.round((Number(appState.settings.bodyWeight || 0) / 2) + 8);
     }
 
-    // ---------- modal ----------
     function showModal(icon, title, text){
       document.getElementById('message-icon').textContent = icon;
       document.getElementById('message-title').textContent = title;
       document.getElementById('message-text').textContent = text;
       document.getElementById('message-overlay').classList.add('active');
     }
-    function hideModal(){
-      document.getElementById('message-overlay').classList.remove('active');
-    }
+    function hideModal(){ document.getElementById('message-overlay').classList.remove('active'); }
 
-    // ---------- splash ----------
     function showSplash(){
       document.getElementById('splash-screen').classList.add('active');
       document.getElementById('app-container').style.display = 'none';
@@ -843,21 +966,14 @@
       document.getElementById('app-container').style.display = 'flex';
     }
 
-    // auto-show video bg only if it loads (so no ugly broken vibe)
     function initSplashVideo(){
       const vid = document.getElementById('splash-video');
       if (!vid) return;
-      vid.addEventListener('canplay', () => {
-        vid.style.display = 'block';
-      });
-      vid.addEventListener('error', () => {
-        vid.style.display = 'none';
-      });
-      // attempt play (some browsers block autoplay unless muted, which we are)
-      vid.play().catch(()=>{ /* ignore */ });
+      vid.addEventListener('canplay', () => { vid.style.display = 'block'; });
+      vid.addEventListener('error', () => { vid.style.display = 'none'; });
+      vid.play().catch(()=>{});
     }
 
-    // ---------- routing ----------
     function openTab(name){
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -868,58 +984,39 @@
       if (name === 'today') setTimeout(drawChart, 30);
     }
 
-    // ---------- missed day logic ----------
     function checkNewDayAndMisses(){
       const today = getTodayString();
 
-      // first ever run
       if (!appState.today.date){
         appState.today.date = today;
         saveData();
         return;
       }
-
       if (appState.today.date === today) return;
 
-      // if last day wasn't ended -> loss
       if (!appState.today.ended){
-        appState.history.push({
-          date: appState.today.date,
-          completed: false,
-          streakAfter: 0,
-          notes: appState.today.notes || ''
-        });
+        appState.history.push({ date: appState.today.date, completed:false, streakAfter:0, notes: appState.today.notes || '' });
         appState.currentStreak = 0;
       }
 
-      // if they skipped multiple days, log each missed day as a loss
       let cursor = addDays(appState.today.date, 1);
       while (cursor !== today){
         appState.history.push({ date: cursor, completed:false, streakAfter:0, notes:'' });
         cursor = addDays(cursor, 1);
       }
 
-      // fresh today
-      appState.today = {
-        date: today,
-        checks: [false,false,false,false,false,false,false],
-        notes: '',
-        ended: false
-      };
+      appState.today = { date: today, checks:[false,false,false,false,false,false,false], notes:'', ended:false };
       saveData();
     }
 
-    // ---------- countdown (per second) ----------
     function updateBedtimeCountdown(){
       const el = document.getElementById('countdown-timer');
       const [bh, bm] = appState.settings.bedtime.split(':').map(n => parseInt(n,10));
       const now = new Date();
-
       const bedtime = new Date(now);
       bedtime.setHours(bh, bm, 0, 0);
 
       const diffMs = bedtime - now;
-
       if (diffMs <= 0){
         el.textContent = '00:00:00';
         el.classList.add('urgent');
@@ -931,10 +1028,8 @@
       const mins = Math.floor((totalSeconds % 3600) / 60);
       const secs = totalSeconds % 60;
 
-      el.textContent =
-        `${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+      el.textContent = `${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
 
-      // urgent when <= 60 minutes left
       if (totalSeconds <= 3600) el.classList.add('urgent');
       else el.classList.remove('urgent');
     }
@@ -947,13 +1042,12 @@
       return currentMins >= (bedtimeMins - 120);
     }
 
-    // ---------- tasks left ----------
     function updateTasksLeft(){
       const left = appState.today.checks.filter(v => !v).length;
       document.getElementById('tasks-left').textContent = `${left} task${left===1?'':'s'} left`;
+      return left;
     }
 
-    // ---------- calendar links ----------
     function updateCalendarLinks(){
       const today = new Date();
       const dateStr = today.toISOString().split('T')[0].replace(/-/g,'');
@@ -972,35 +1066,32 @@
         const m = String(mins%60).padStart(2,'0');
         return [h,m];
       }
-      function timeBlock(h, m){ return `${String(h).padStart(2,'0')}${String(m).padStart(2,'0')}00`; }
       function endBlock(mins){
         const [eh, em] = hhmm(mins + 60);
         return `${eh}${em}00`;
       }
 
-      const [midH, midMin] = hhmm(middayM);
-      const [lapH, lapMin] = hhmm(lastLapM);
-
-      const wakeStart = timeBlock(wake[0], wake[1]);
+      const wakeStart = `${String(wake[0]).padStart(2,'0')}${String(wake[1]).padStart(2,'0')}00`;
       const wakeEnd   = endBlock(wakeM);
 
+      const [midH, midMin] = hhmm(middayM);
       const midStart  = `${midH}${midMin}00`;
       const midEnd    = endBlock(middayM);
 
+      const [lapH, lapMin] = hhmm(lastLapM);
       const lapStart  = `${lapH}${lapMin}00`;
       const lapEnd    = endBlock(lastLapM);
 
       document.getElementById('wakeup-calendar').href =
-        `https://calendar.google.com/calendar/render?action=TEMPLATE&text=75+Gifted:+Rise+%26+Seek&details=rise+%26+seek.+today+is+75+gifted.&dates=${dateStr}T${wakeStart}/${dateStr}T${wakeEnd}&recur=RRULE:FREQ=DAILY`;
+        `https://calendar.google.com/calendar/render?action=TEMPLATE&text=75+GIFTED:+Rise+%26+Seek&details=rise+%26+seek.+today+is+75+gifted.&dates=${dateStr}T${wakeStart}/${dateStr}T${wakeEnd}&recur=RRULE:FREQ=DAILY`;
 
       document.getElementById('midday-calendar').href =
-        `https://calendar.google.com/calendar/render?action=TEMPLATE&text=75+Gifted:+Midday+Check-In&details=midday+check-in.+finish+your+7.&dates=${dateStr}T${midStart}/${dateStr}T${midEnd}&recur=RRULE:FREQ=DAILY`;
+        `https://calendar.google.com/calendar/render?action=TEMPLATE&text=75+GIFTED:+Midday+Check-In&details=midday+check-in.+finish+your+7.&dates=${dateStr}T${midStart}/${dateStr}T${midEnd}&recur=RRULE:FREQ=DAILY`;
 
       document.getElementById('bedtime-calendar').href =
-        `https://calendar.google.com/calendar/render?action=TEMPLATE&text=75+Gifted:+Last+Lap&details=last+lap.+finish+your+7.&dates=${dateStr}T${lapStart}/${dateStr}T${lapEnd}&recur=RRULE:FREQ=DAILY`;
+        `https://calendar.google.com/calendar/render?action=TEMPLATE&text=75+GIFTED:+Last+Lap&details=last+lap.+finish+your+7.&dates=${dateStr}T${lapStart}/${dateStr}T${lapEnd}&recur=RRULE:FREQ=DAILY`;
     }
 
-    // ---------- ui render ----------
     function updateTodayUI(){
       document.getElementById('current-streak').textContent = appState.currentStreak;
       document.getElementById('today-date').textContent = formatDate(appState.today.date);
@@ -1060,7 +1151,6 @@
       return ready;
     }
 
-    // ---------- chart ----------
     function drawChart(){
       const canvas = document.getElementById('streak-chart');
       const ctx = canvas.getContext('2d');
@@ -1078,7 +1168,7 @@
 
       const data = appState.history.slice(-75);
       if (data.length === 0){
-        ctx.fillStyle = '#888';
+        ctx.fillStyle = 'rgba(255,255,255,0.75)';
         ctx.font = '14px Montserrat, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('no ascension data yet', width/2, height/2);
@@ -1093,8 +1183,8 @@
       const xStep = chartW / Math.max(data.length-1, 1);
       const yScale = chartH / maxStreak;
 
-      // grid + labels
-      ctx.strokeStyle = '#eee';
+      // grid
+      ctx.strokeStyle = 'rgba(255,255,255,0.10)';
       ctx.lineWidth = 1;
       for (let i=0;i<=4;i++){
         const y = padding + (chartH/4)*i;
@@ -1104,15 +1194,15 @@
         ctx.stroke();
 
         const val = Math.round(maxStreak - (maxStreak/4)*i);
-        ctx.fillStyle = '#999';
+        ctx.fillStyle = 'rgba(255,255,255,0.60)';
         ctx.font = '11px Montserrat, sans-serif';
         ctx.textAlign = 'right';
         ctx.fillText(String(val), padding-8, y+4);
       }
 
       // line
-      ctx.strokeStyle = '#eda8ee';
-      ctx.lineWidth = 2.6;
+      ctx.strokeStyle = '#e2f2aa';
+      ctx.lineWidth = 2.8;
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
       ctx.beginPath();
@@ -1125,17 +1215,156 @@
       ctx.stroke();
 
       // dots
-      ctx.fillStyle = '#eda8ee';
+      ctx.fillStyle = '#e2f2aa';
       data.forEach((p, idx) => {
         const x = padding + idx*xStep;
         const y = padding + chartH - (p.streakAfter*yScale);
         ctx.beginPath();
-        ctx.arc(x,y,3,0,Math.PI*2);
+        ctx.arc(x,y,3.2,0,Math.PI*2);
         ctx.fill();
       });
     }
 
-    // ---------- end day ----------
+    // --- share card drawing (canvas-only, no external libs) ---
+    function drawShareCanvas(){
+      const c = document.getElementById('share-canvas');
+      const ctx = c.getContext('2d');
+
+      const dpr = window.devicePixelRatio || 1;
+      const rect = c.getBoundingClientRect();
+      c.width = rect.width * dpr;
+      c.height = rect.height * dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+
+      const w = rect.width;
+      const h = rect.height;
+
+      // background
+      const grad = ctx.createLinearGradient(0,0,w,h);
+      grad.addColorStop(0, '#5b7c1a');
+      grad.addColorStop(1, '#476313');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0,0,w,h);
+
+      // inner panel
+      ctx.fillStyle = 'rgba(0,0,0,0.22)';
+      roundRect(ctx, 12, 12, w-24, h-24, 14);
+      ctx.fill();
+
+      // mini chart area
+      const data = appState.history.slice(-30);
+      const maxStreak = Math.max(10, ...data.map(d => d.streakAfter), appState.currentStreak);
+
+      const pad = 26;
+      const cw = w - pad*2;
+      const ch = h - pad*2;
+
+      // grid
+      ctx.strokeStyle = 'rgba(255,255,255,0.10)';
+      ctx.lineWidth = 1;
+      for (let i=0;i<=4;i++){
+        const y = pad + (ch/4)*i;
+        ctx.beginPath();
+        ctx.moveTo(pad, y);
+        ctx.lineTo(w-pad, y);
+        ctx.stroke();
+      }
+
+      if (data.length === 0){
+        ctx.fillStyle = 'rgba(255,255,255,0.75)';
+        ctx.font = '14px Montserrat, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('no data yet', w/2, h/2);
+        return;
+      }
+
+      const xStep = cw / Math.max(data.length-1, 1);
+      const yScale = ch / maxStreak;
+
+      // line
+      ctx.strokeStyle = '#e2f2aa';
+      ctx.lineWidth = 3;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      data.forEach((p, idx) => {
+        const x = pad + idx*xStep;
+        const y = pad + ch - (p.streakAfter*yScale);
+        if (idx===0) ctx.moveTo(x,y);
+        else ctx.lineTo(x,y);
+      });
+      ctx.stroke();
+
+      // dots
+      ctx.fillStyle = '#e2f2aa';
+      data.forEach((p, idx) => {
+        const x = pad + idx*xStep;
+        const y = pad + ch - (p.streakAfter*yScale);
+        ctx.beginPath();
+        ctx.arc(x,y,3.4,0,Math.PI*2);
+        ctx.fill();
+      });
+    }
+
+    function roundRect(ctx, x, y, w, h, r){
+      const radius = Math.min(r, w/2, h/2);
+      ctx.beginPath();
+      ctx.moveTo(x+radius, y);
+      ctx.arcTo(x+w, y, x+w, y+h, radius);
+      ctx.arcTo(x+w, y+h, x, y+h, radius);
+      ctx.arcTo(x, y+h, x, y, radius);
+      ctx.arcTo(x, y, x+w, y, radius);
+      ctx.closePath();
+    }
+
+    function openShare(){
+      // fill share ui
+      document.getElementById('share-date').textContent = formatDate(appState.today.date);
+      document.getElementById('share-current').textContent = appState.currentStreak;
+      document.getElementById('share-longest').textContent = appState.longestStreak;
+      const left = appState.today.checks.filter(v => !v).length;
+      document.getElementById('share-left').textContent = left;
+
+      // draw chart onto share canvas
+      drawShareCanvas();
+
+      document.getElementById('share-overlay').classList.add('active');
+    }
+    function closeShare(){ document.getElementById('share-overlay').classList.remove('active'); }
+
+    function downloadSharePNG(){
+      const c = document.getElementById('share-canvas');
+      const url = c.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `75-gifted-${appState.today.date}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    async function nativeShare(){
+      const c = document.getElementById('share-canvas');
+      if (!navigator.share){
+        showModal('📌', 'share', 'your browser doesn’t support native share. use download png instead.');
+        return;
+      }
+
+      // convert canvas to blob -> file
+      const blob = await new Promise(res => c.toBlob(res, 'image/png'));
+      const file = new File([blob], `75-gifted-${appState.today.date}.png`, { type:'image/png' });
+
+      try{
+        await navigator.share({
+          title: '75 GIFTED',
+          text: '75 GIFTED, a 75 day spiritual discipline challenge',
+          files: [file]
+        });
+      } catch(e){
+        // user canceled or share failed
+      }
+    }
+
     function endDay(){
       const allChecked = appState.today.checks.every(Boolean);
 
@@ -1172,7 +1401,7 @@
       updateSettingsUI();
     }
 
-    // ---------- events ----------
+    // events
     document.querySelectorAll('.tab-button').forEach(btn => {
       btn.addEventListener('click', () => openTab(btn.dataset.tab));
     });
@@ -1197,6 +1426,11 @@
       }
       endDay();
     });
+
+    document.getElementById('share-progress-btn').addEventListener('click', openShare);
+    document.getElementById('close-share-btn').addEventListener('click', closeShare);
+    document.getElementById('download-share-btn').addEventListener('click', downloadSharePNG);
+    document.getElementById('native-share-btn').addEventListener('click', nativeShare);
 
     document.getElementById('message-ok').addEventListener('click', hideModal);
 
@@ -1255,9 +1489,9 @@
         openTab('settings');
         return;
       }
-      showModal('✅', 'setup complete', 'you’re ready. hit open and run your day.');
+      showModal('✅', 'setup complete', 'you’re ready. go run your day.');
       saveData();
-      showSplash(); // back to splash so it feels app-y
+      showSplash();
     });
 
     // splash buttons
@@ -1276,34 +1510,35 @@
       openTab('settings');
     });
 
-    window.addEventListener('resize', drawChart);
+    window.addEventListener('resize', () => {
+      drawChart();
+      if (document.getElementById('share-overlay').classList.contains('active')) drawShareCanvas();
+    });
 
-    // ---------- dynamic manifest (so you don’t have to make a file) ----------
+    // dynamic manifest so it installs nicer on android/chrome
     function setDynamicManifest(){
       const svg = encodeURIComponent(`
         <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
           <defs>
             <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#e2f2aa"/>
+              <stop offset="0" stop-color="#5b7c1a"/>
               <stop offset="1" stop-color="#476313"/>
             </linearGradient>
           </defs>
           <rect width="512" height="512" rx="96" fill="url(#g)"/>
-          <circle cx="190" cy="190" r="120" fill="#eda8ee" opacity="0.85"/>
-          <circle cx="330" cy="330" r="120" fill="#ebfc72" opacity="0.85"/>
-          <text x="256" y="290" text-anchor="middle" font-family="Montserrat, Arial" font-size="92" font-weight="900" fill="#111">75</text>
+          <circle cx="210" cy="210" r="140" fill="#e2f2aa" opacity="0.92"/>
+          <text x="256" y="315" text-anchor="middle" font-family="Montserrat, Arial" font-size="88" font-weight="900" fill="#0c1203">75</text>
         </svg>
       `);
-
       const iconData = `data:image/svg+xml;charset=utf-8,${svg}`;
 
       const manifest = {
-        name: "75 gifted",
-        short_name: "75 gifted",
+        name: "75 GIFTED",
+        short_name: "75 GIFTED",
         start_url: ".",
         display: "standalone",
-        background_color: "#f8f9fa",
-        theme_color: "#eda8ee",
+        background_color: "#476313",
+        theme_color: "#476313",
         icons: [
           { src: iconData, sizes: "192x192", type: "image/svg+xml" },
           { src: iconData, sizes: "512x512", type: "image/svg+xml" }
@@ -1316,7 +1551,6 @@
       if (link) link.href = url;
     }
 
-    // ---------- boot ----------
     function boot(){
       loadData();
       checkNewDayAndMisses();
@@ -1327,7 +1561,7 @@
       updateSettingsUI();
       updateTodayUI();
 
-      // always show splash first, every time
+      // always splash first
       showSplash();
       openTab('today');
 
