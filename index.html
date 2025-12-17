@@ -8,16 +8,17 @@
   <!-- montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
       --bg: #e3f2aa;
       --ink: #476313;
       --accent: #eda8ee;
+
       --card: rgba(255,255,255,0.35);
       --card-border: rgba(71,99,19,0.18);
-      --muted: rgba(71,99,19,0.70);
+      --muted: rgba(71,99,19,0.72);
       --shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
@@ -31,29 +32,28 @@
       letter-spacing: -0.5px;
     }
 
-    .app{
-      height:100%;
-      width:100%;
-      display:flex;
-      flex-direction:column;
-    }
+    .app{ height:100%; width:100%; display:flex; flex-direction:column; }
 
-    .header{
-      padding: 16px 18px 10px;
-      text-align:center;
-    }
-
+    .header{ padding: 16px 18px 10px; text-align:center; }
     .header h1{
-      font-size: 26px;
-      font-weight: 600;
+      font-size: 28px;
+      font-weight: 900; /* always 900 */
       color: var(--accent);
       letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .header .tagline{
+      margin-top: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: lowercase;
     }
 
     .content{
       flex:1;
       overflow-y:auto;
-      padding: 14px 16px 86px;
+      padding: 14px 16px 90px;
     }
 
     .card{
@@ -69,14 +69,16 @@
     .subtle{
       font-size: 12px;
       color: var(--muted);
-      font-weight: 500;
+      font-weight: 600;
+      text-transform: lowercase;
     }
 
-    .row{
-      display:flex;
-      gap: 10px;
-      align-items:stretch;
+    .accent{
+      color: var(--accent);
+      font-weight: 700; /* accent text can be 700 */
     }
+
+    .row{ display:flex; gap: 10px; align-items:stretch; }
 
     .stats{
       display:grid;
@@ -93,14 +95,14 @@
     }
     .stat .value{
       font-size: 28px;
-      font-weight: 600;
+      font-weight: 700; /* accent-ish */
       color: var(--accent);
       line-height: 1;
     }
     .stat .label{
       margin-top: 6px;
       font-size: 11px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--muted);
       text-transform: lowercase;
     }
@@ -125,14 +127,9 @@
       color: var(--ink);
       white-space: nowrap;
     }
-    .pill .time{
-      color: var(--accent);
-      font-weight: 600;
-    }
+    .pill .time{ color: var(--accent); font-weight: 700; }
 
-    .chart-wrap{
-      padding: 12px;
-    }
+    .chart-wrap{ padding: 12px; }
     canvas{
       width:100%;
       height: 210px;
@@ -144,10 +141,11 @@
 
     .date{
       text-align:center;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--muted);
       text-transform: lowercase;
       margin-top: 2px;
+      font-size: 13px;
     }
 
     .checklist-item{
@@ -181,27 +179,29 @@
       align-items:center;
       justify-content:center;
       color: var(--accent);
-      font-weight: 600;
+      font-weight: 700;
       font-size: 14px;
     }
 
     .label{
       flex:1;
-      font-weight: 500;
+      font-weight: 600;
       text-transform: lowercase;
       color: var(--ink);
       font-size: 14px;
+      line-height: 1.25;
     }
 
     .water-target{
       color: var(--accent);
-      font-weight: 600;
+      font-weight: 700;
       font-size: 12px;
+      margin-left: 6px;
     }
 
     textarea{
       width:100%;
-      min-height: 100px;
+      min-height: 110px;
       border-radius: 12px;
       border: 1px solid var(--card-border);
       background: rgba(255,255,255,0.25);
@@ -211,21 +211,48 @@
       color: var(--ink);
       resize: vertical;
       outline: none;
+      font-weight: 500;
+    }
+
+    input[type="date"], input[type="time"], input[type="number"], input[type="text"]{
+      width:100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.25);
+      color: var(--ink);
+      font-family: inherit;
+      font-weight: 600;
+      outline: none;
     }
 
     .btn{
       width:100%;
       padding: 14px 14px;
       border-radius: 14px;
-      border: 1px solid rgba(237,168,238,0.30);
-      background: rgba(237,168,238,0.22);
+      border: 1px solid rgba(237,168,238,0.35);
+      background: rgba(237,168,238,0.20);
       color: var(--ink);
-      font-weight: 600;
+      font-weight: 700;
       cursor:pointer;
       transition: transform .12s ease, opacity .12s ease;
+      text-transform: lowercase;
     }
     .btn:active{ transform: scale(0.99); }
     .btn[disabled]{ opacity: 0.45; cursor:not-allowed; }
+
+    .btn.secondary{
+      border: 1px solid rgba(71,99,19,0.22);
+      background: rgba(255,255,255,0.18);
+      font-weight: 600;
+    }
+
+    .btn-row{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
 
     /* tabs bottom */
     .tabs{
@@ -244,33 +271,34 @@
       border: 1px solid rgba(71,99,19,0.18);
       background: rgba(255,255,255,0.18);
       padding: 10px 10px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--ink);
       cursor:pointer;
       text-transform: lowercase;
     }
     .tab.active{
-      border-color: rgba(237,168,238,0.45);
+      border-color: rgba(237,168,238,0.50);
       background: rgba(237,168,238,0.18);
       color: var(--accent);
+      font-weight: 700;
     }
 
-    /* sections */
     .section{ display:none; }
     .section.active{ display:block; }
 
     /* rules */
     .rules h2{
       font-size: 22px;
-      font-weight: 600;
+      font-weight: 900;
       color: var(--accent);
       text-align:center;
       margin-bottom: 12px;
       letter-spacing: 1px;
+      text-transform: uppercase;
     }
     .rules h3{
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--ink);
       margin-top: 14px;
       margin-bottom: 8px;
@@ -278,7 +306,7 @@
     }
     .rules p, .rules li{
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--muted);
       line-height: 1.65;
     }
@@ -302,7 +330,7 @@
     .overlay.active{ display:flex; }
 
     .modal{
-      width: min(360px, 92vw);
+      width: min(380px, 92vw);
       background: rgba(255,255,255,0.92);
       border-radius: 18px;
       border: 1px solid rgba(71,99,19,0.18);
@@ -310,19 +338,11 @@
       padding: 18px;
       text-align:center;
     }
-    .modal .icon{
-      font-size: 42px;
-      margin-bottom: 8px;
-    }
-    .modal .title{
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 6px;
-    }
+    .modal .icon{ font-size: 42px; margin-bottom: 8px; }
+    .modal .title{ font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
     .modal .text{
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       color: rgba(71,99,19,0.75);
       line-height: 1.5;
       margin-bottom: 12px;
@@ -334,6 +354,7 @@
   <div class="app">
     <header class="header">
       <h1>75 GIFTED</h1>
+      <div class="tagline">a 75 day spiritual discipline challenge</div>
     </header>
 
     <main class="content">
@@ -349,12 +370,18 @@
               bedtime in <span class="time" id="countdown">--:--:--</span>
             </div>
           </div>
+          <div style="margin-top:10px;" class="subtle">
+            gift: <span class="accent" id="gift-display">set in settings</span>
+          </div>
+          <div style="margin-top:6px;" class="subtle">
+            surrendered: <span class="accent" id="vices-display">set in settings</span>
+          </div>
         </div>
 
         <div class="card chart-wrap">
           <canvas id="streak-chart"></canvas>
           <div class="subtle" style="margin-top:10px; text-align:center;">
-            streak ascension chart (resets to 0 on loss)
+            ascension chart (streak resets to 0 on loss)
           </div>
         </div>
 
@@ -384,33 +411,33 @@
           <div class="checklist-item">
             <input class="checkbox" type="checkbox" id="check-1">
             <label class="label" for="check-1">
-              drink enough water <span class="water-target" id="water-target"></span>
+              drink your water goal <span class="water-target" id="water-target"></span>
             </label>
           </div>
 
           <div class="checklist-item">
             <input class="checkbox" type="checkbox" id="check-2">
-            <label class="label" for="check-2">read bible for 10 mins</label>
+            <label class="label" for="check-2">read bible for 10 minutes</label>
           </div>
 
           <div class="checklist-item">
             <input class="checkbox" type="checkbox" id="check-3">
-            <label class="label" for="check-3">serve weekly (where God calls)</label>
+            <label class="label" for="check-3">serve weekly (where God is calling you to give most)</label>
           </div>
 
           <div class="checklist-item">
             <input class="checkbox" type="checkbox" id="check-4">
-            <label class="label" for="check-4">share your gift publicly</label>
+            <label class="label" for="check-4">share your gift publicly: <span class="accent" id="gift-inline">set in settings</span></label>
           </div>
 
           <div class="checklist-item">
             <input class="checkbox" type="checkbox" id="check-5">
-            <label class="label" for="check-5">45 mins of movement</label>
+            <label class="label" for="check-5">45 minutes of movement</label>
           </div>
 
           <div class="checklist-item">
             <input class="checkbox" type="checkbox" id="check-6">
-            <label class="label" for="check-6">no vices / no compromises</label>
+            <label class="label" for="check-6">no vices / no compromises: <span class="accent" id="vices-inline">set in settings</span></label>
           </div>
         </div>
 
@@ -435,32 +462,53 @@
           <div style="display:grid; gap:12px;">
             <div>
               <div class="subtle">start date</div>
-              <input type="date" id="start-date" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--card-border); background: rgba(255,255,255,0.25); color: var(--ink); font-family: inherit; font-weight:600;">
+              <input type="date" id="start-date">
+            </div>
+
+            <div>
+              <div class="subtle">your dedicated gift (what you will share daily)</div>
+              <input type="text" id="gift-text" placeholder="ex: my creative direction + strategy, my testimony, my art, my voice...">
+            </div>
+
+            <div>
+              <div class="subtle">your surrendered vices / temptations</div>
+              <input type="text" id="vices-text" placeholder="ex: doom scrolling, alcohol, porn, overeating, gossip, spending...">
             </div>
 
             <div class="row">
               <div style="flex:1;">
                 <div class="subtle">wakeup time</div>
-                <input type="time" id="wakeup-time" value="06:00" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--card-border); background: rgba(255,255,255,0.25); color: var(--ink); font-family: inherit; font-weight:600;">
+                <input type="time" id="wakeup-time" value="06:00">
               </div>
               <div style="flex:1;">
                 <div class="subtle">bedtime</div>
-                <input type="time" id="bedtime" value="22:00" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--card-border); background: rgba(255,255,255,0.25); color: var(--ink); font-family: inherit; font-weight:600;">
+                <input type="time" id="bedtime" value="22:00">
               </div>
             </div>
 
             <div>
               <div class="subtle">body weight (lbs)</div>
-              <input type="number" id="body-weight" value="150" min="50" max="500" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--card-border); background: rgba(255,255,255,0.25); color: var(--ink); font-family: inherit; font-weight:600;">
+              <input type="number" id="body-weight" value="150" min="50" max="500">
             </div>
 
             <div class="card" style="margin:0; background: rgba(255,255,255,0.22);">
               <div class="subtle" style="text-align:center;">water goal</div>
-              <div style="text-align:center; font-size:22px; font-weight:600; color: var(--accent); margin-top:6px;" id="computed-water">0 oz</div>
+              <div style="text-align:center; font-size:22px; font-weight:700; color: var(--accent); margin-top:6px;" id="computed-water">0 oz</div>
               <div class="subtle" style="text-align:center; margin-top:6px;">rule: 1/2 bodyweight in oz + 8 oz (daily movement)</div>
             </div>
 
             <button class="btn" id="save-settings-btn">save settings</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="subtle" style="margin-bottom:10px;">calendar reminders (optional)</div>
+          <div class="subtle">these open google calendar + you hit save. set once, you’re good.</div>
+
+          <div class="btn-row">
+            <a class="btn secondary" id="cal-wakeup" href="#" target="_blank" rel="noopener noreferrer">add wakeup reminder</a>
+            <a class="btn secondary" id="cal-midday" href="#" target="_blank" rel="noopener noreferrer">add midday check-in</a>
+            <a class="btn secondary" id="cal-lastlap" href="#" target="_blank" rel="noopener noreferrer">add last-lap reminder (1 hr before bed)</a>
           </div>
         </div>
       </section>
@@ -513,7 +561,7 @@
   </div>
 
   <script>
-    const APP_DATA_KEY = '75_gifted_data_v2';
+    const APP_DATA_KEY = '75_gifted_data_v3';
 
     const DEFAULT_STATE = {
       currentStreak: 0,
@@ -523,7 +571,9 @@
         startDate: null,
         wakeupTime: '06:00',
         bedtime: '22:00',
-        bodyWeight: 150
+        bodyWeight: 150,
+        giftText: '',
+        vicesText: ''
       },
       today: {
         date: null,
@@ -615,7 +665,6 @@
 
     function computeWaterOz(){
       const bw = Number(appState.settings.bodyWeight) || 150;
-      // rule: 1/2 bodyweight + 8 oz (daily movement)
       return Math.round((bw * 0.5) + 8);
     }
 
@@ -637,8 +686,6 @@
       const [bh,bm] = String(appState.settings.bedtime || '22:00').split(':').map(Number);
       const bed = new Date();
       bed.setHours(bh||22, bm||0, 0, 0);
-
-      // if bedtime already passed today, show 0 (they missed window)
       return bed - now;
     }
 
@@ -646,8 +693,6 @@
       const now = new Date();
       const currentMins = now.getHours()*60 + now.getMinutes();
       const bedtimeMins = minutesFromHHMM(appState.settings.bedtime || '22:00');
-
-      // within 2 hours of bedtime
       return currentMins >= (bedtimeMins - 120) && currentMins <= bedtimeMins;
     }
 
@@ -662,12 +707,84 @@
       document.getElementById('overlay').classList.remove('active');
     });
 
+    // google calendar links
+    function pad2(n){ return String(n).padStart(2,'0'); }
+
+    function makeGCalLink({ title, details, hour, minute }){
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/New_York';
+      const d = new Date();
+      const yyyy = d.getFullYear();
+      const mm = pad2(d.getMonth()+1);
+      const dd = pad2(d.getDate());
+
+      // google template expects local-ish, we keep it simple for your use case
+      const dateStr = `${yyyy}${mm}${dd}`;
+      const start = `${dateStr}T${pad2(hour)}${pad2(minute)}00`;
+      const endHour = Math.min(23, hour + 1);
+      const end = `${dateStr}T${pad2(endHour)}${pad2(minute)}00`;
+
+      const text = encodeURIComponent(title);
+      const det = encodeURIComponent(details);
+      const recur = encodeURIComponent('RRULE:FREQ=DAILY');
+
+      return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&details=${det}&dates=${start}/${end}&recur=${recur}&ctz=${encodeURIComponent(tz)}`;
+    }
+
+    function updateCalendarLinks(){
+      const wake = (appState.settings.wakeupTime || '06:00').split(':').map(Number);
+      const bed = (appState.settings.bedtime || '22:00').split(':').map(Number);
+
+      const wakeMins = (wake[0]*60) + (wake[1]||0);
+      const bedMins = (bed[0]*60) + (bed[1]||0);
+
+      const middayMins = Math.floor((wakeMins + bedMins) / 2);
+      const lastlapMins = Math.max(0, bedMins - 60);
+
+      const middayH = Math.floor(middayMins/60);
+      const middayM = middayMins%60;
+
+      const lastlapH = Math.floor(lastlapMins/60);
+      const lastlapM = lastlapMins%60;
+
+      const gift = (appState.settings.giftText || 'your gift').trim();
+      const vices = (appState.settings.vicesText || 'your surrendered vices').trim();
+
+      document.getElementById('cal-wakeup').href = makeGCalLink({
+        title: '75 GIFTED: wake up + pray',
+        details: `rise + seek. gift: ${gift}. surrendered: ${vices}.`,
+        hour: wake[0]||6,
+        minute: wake[1]||0
+      });
+
+      document.getElementById('cal-midday').href = makeGCalLink({
+        title: '75 GIFTED: midday check-in',
+        details: `quick check: complete the 7 before bedtime. gift: ${gift}.`,
+        hour: middayH,
+        minute: middayM
+      });
+
+      document.getElementById('cal-lastlap').href = makeGCalLink({
+        title: '75 GIFTED: last lap',
+        details: `one hour left. finish strong. all or nothing.`,
+        hour: lastlapH,
+        minute: lastlapM
+      });
+    }
+
     // UI updates
     function updateTodayUI(){
       document.getElementById('today-date').textContent = formatDate(appState.today.date);
 
       const waterOz = computeWaterOz();
       document.getElementById('water-target').textContent = `(${waterOz} oz)`;
+
+      const gift = (appState.settings.giftText || '').trim();
+      const vices = (appState.settings.vicesText || '').trim();
+
+      document.getElementById('gift-display').textContent = gift ? gift : 'set in settings';
+      document.getElementById('vices-display').textContent = vices ? vices : 'set in settings';
+      document.getElementById('gift-inline').textContent = gift ? gift : 'set in settings';
+      document.getElementById('vices-inline').textContent = vices ? vices : 'set in settings';
 
       for (let i=0;i<7;i++){
         const el = document.getElementById(`check-${i}`);
@@ -680,7 +797,6 @@
       document.getElementById('stat-longest').textContent = appState.longestStreak;
       document.getElementById('stat-elapsed').textContent = getDaysElapsed();
 
-      // end day button lock
       const btn = document.getElementById('end-day-btn');
       btn.disabled = !canEndDayNow();
 
@@ -692,11 +808,14 @@
       document.getElementById('wakeup-time').value = appState.settings.wakeupTime || '06:00';
       document.getElementById('bedtime').value = appState.settings.bedtime || '22:00';
       document.getElementById('body-weight').value = appState.settings.bodyWeight || 150;
+      document.getElementById('gift-text').value = appState.settings.giftText || '';
+      document.getElementById('vices-text').value = appState.settings.vicesText || '';
 
       document.getElementById('computed-water').textContent = `${computeWaterOz()} oz`;
+      updateCalendarLinks();
     }
 
-    // chart: uses history + today's potential point (optional)
+    // chart
     function drawChart(){
       const canvas = document.getElementById('streak-chart');
       const ctx = canvas.getContext('2d');
@@ -709,7 +828,6 @@
 
       const w = rect.width;
       const h = rect.height;
-
       ctx.clearRect(0,0,w,h);
 
       const data = appState.history.slice(-75);
@@ -726,7 +844,6 @@
       const cw = w - pad*2;
       const ch = h - pad*2;
 
-      // grid
       ctx.strokeStyle = 'rgba(71,99,19,0.14)';
       ctx.lineWidth = 1;
       for (let i=0;i<=5;i++){
@@ -737,7 +854,6 @@
         ctx.stroke();
       }
 
-      // line
       const xStep = cw / Math.max(data.length - 1, 1);
       const yScale = ch / maxVal;
 
@@ -755,7 +871,6 @@
       });
       ctx.stroke();
 
-      // points
       ctx.fillStyle = 'rgba(237,168,238,0.95)';
       data.forEach((p, idx) => {
         const x = pad + idx*xStep;
@@ -778,7 +893,7 @@
       setInterval(tick, 1000);
     }
 
-    // handlers
+    // handlers: checkboxes
     for (let i=0;i<7;i++){
       document.getElementById(`check-${i}`).addEventListener('change', (e) => {
         appState.today.checks[i] = e.target.checked;
@@ -791,28 +906,39 @@
       saveData();
     });
 
-    document.getElementById('save-settings-btn').addEventListener('click', () => {
-      // simple save action; actual inputs are saved on change below too
-      saveData();
-      updateTodayUI();
-      showModal('✅', 'saved', 'settings saved. now go win today.');
-    });
-
+    // settings bindings
     document.getElementById('start-date').addEventListener('change', (e) => {
       appState.settings.startDate = e.target.value || null;
       saveData();
       updateTodayUI();
+      updateCalendarLinks();
+    });
+
+    document.getElementById('gift-text').addEventListener('input', (e) => {
+      appState.settings.giftText = e.target.value || '';
+      saveData();
+      updateTodayUI();
+      updateCalendarLinks();
+    });
+
+    document.getElementById('vices-text').addEventListener('input', (e) => {
+      appState.settings.vicesText = e.target.value || '';
+      saveData();
+      updateTodayUI();
+      updateCalendarLinks();
     });
 
     document.getElementById('wakeup-time').addEventListener('change', (e) => {
       appState.settings.wakeupTime = e.target.value || '06:00';
       saveData();
+      updateCalendarLinks();
     });
 
     document.getElementById('bedtime').addEventListener('change', (e) => {
       appState.settings.bedtime = e.target.value || '22:00';
       saveData();
       updateTodayUI();
+      updateCalendarLinks();
     });
 
     document.getElementById('body-weight').addEventListener('input', (e) => {
@@ -822,6 +948,14 @@
       updateTodayUI();
     });
 
+    document.getElementById('save-settings-btn').addEventListener('click', () => {
+      saveData();
+      updateSettingsUI();
+      updateTodayUI();
+      showModal('✅', 'saved', 'settings saved. now go win today.');
+    });
+
+    // end day logic
     document.getElementById('end-day-btn').addEventListener('click', () => {
       if (!canEndDayNow()){
         showModal('⏳', 'not yet', 'you can only end the day within 2 hours of bedtime.');
@@ -881,8 +1015,8 @@
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById(tab).classList.add('active');
 
-        // refresh chart when returning to today
         if (tab === 'today') setTimeout(drawChart, 50);
+        if (tab === 'settings') setTimeout(updateCalendarLinks, 50);
       });
     });
 
