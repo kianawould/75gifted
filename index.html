@@ -2,827 +2,472 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>75 GIFTED</title>
 
-  <!-- app meta -->
-  <meta name="theme-color" content="#476313" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <!-- optional share preview -->
-  <meta property="og:title" content="75 GIFTED" />
-  <meta property="og:description" content="a 75 day spiritual discipline challenge. track your ascension." />
-  <meta property="og:image" content="social.png" />
-  <meta property="og:type" content="website" />
-
-  <!-- font -->
+  <!-- montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;600;900&display=swap" rel="stylesheet">
-
-  <link rel="manifest" id="manifest-link" href="#" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <link rel="icon" type="image/png" href="icon-192.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#476313;
-      --accent:#e2f2aa;
-      --ink:#0c1203;
-      --card:#3a5310;         /* dark green card */
-      --card2:#2f430c;        /* deeper */
-      --line:rgba(255,255,255,0.10);
-      --muted:rgba(255,255,255,0.70);
-      --muted2:rgba(255,255,255,0.55);
+      --bg: #e3f2aa;
+      --ink: #476313;
+      --accent: #eda8ee;
+      --card: rgba(255,255,255,0.35);
+      --card-border: rgba(71,99,19,0.18);
+      --muted: rgba(71,99,19,0.70);
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
-    *{ margin:0; padding:0; box-sizing:border-box; }
-    html, body{ height:100%; width:100%; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; width:100%; }
     body{
-      font-family:'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #5b7c1a 0%, var(--bg) 70%);
-      color:#fff;
+      font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      overflow: hidden;
+      letter-spacing: -0.5px;
     }
 
-    /* splash */
-    .splash-screen{
-      position:fixed; inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      z-index:2000;
-      background: linear-gradient(135deg, #5b7c1a 0%, var(--bg) 70%);
-      overflow:hidden;
-    }
-    .splash-screen.active{ display:flex; }
-
-    .splash-orb{
-      position:absolute;
-      width:380px; height:380px;
-      border-radius:999px;
-      filter: blur(40px);
-      opacity:0.55;
-      animation: floaty 6.5s ease-in-out infinite;
-      background:
-        radial-gradient(circle at 30% 30%, var(--accent), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.25), transparent 60%);
-      z-index:1;
-    }
-    @keyframes floaty{
-      0% { transform: translate(-30px, 10px) scale(1); }
-      50% { transform: translate(40px, -30px) scale(1.06); }
-      100% { transform: translate(-30px, 10px) scale(1); }
-    }
-
-    .splash-video{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      object-fit:cover;
-      opacity:0.25;
-      z-index:0;
-      display:none;
-    }
-
-    .splash-card{
-      width:100%;
-      max-width:420px;
-      background: rgba(18,25,6,0.55);
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius:20px;
-      padding:28px;
-      text-align:center;
-      box-shadow:0 12px 40px rgba(0,0,0,0.25);
-      backdrop-filter: blur(12px);
-      position:relative;
-      z-index:2;
-    }
-    .splash-title{
-      font-size:34px;
-      font-weight:900;
-      letter-spacing:-1px;
-      text-transform:uppercase;
-      color:#eda8ee(--accent);
-    }
-    .splash-sub{
-      margin-top:10px;
-      font-size:14px;
-      color:var(--muted);
-      text-transform:lowercase;
-      line-height:1.5;
-      font-weight:600;
-    }
-    .splash-actions{
-      display:flex;
-      gap:10px;
-      margin-top:18px;
-    }
-    .splash-btn{
-      flex:1;
-      padding:16px;
-      border:none;
-      border-radius:14px;
-      font-size:15px;
-      font-weight:900;
-      text-transform:lowercase;
-      cursor:pointer;
-      transition:transform .15s, opacity .15s;
-      letter-spacing:-0.2px;
-    }
-    .splash-btn.primary{
-      background:var(--accent);
-      color:var(--ink);
-      box-shadow:0 8px 18px rgba(226,242,170,0.22);
-    }
-    .splash-btn.primary:hover{ transform: translateY(-1px); opacity:0.95; }
-    .splash-btn.secondary{
-      background:rgba(255,255,255,0.10);
-      color:#fff;
-      border:1px solid rgba(255,255,255,0.16);
-    }
-    .splash-btn.secondary:hover{ transform: translateY(-1px); opacity:0.95; }
-
-    /* app shell */
-    .app-container{
+    .app{
       height:100%;
       width:100%;
       display:flex;
       flex-direction:column;
-      background: transparent;
     }
 
     .header{
-      background: rgba(18,25,6,0.45);
-      border-bottom:1px solid rgba(255,255,255,0.10);
-      padding:16px 20px 12px;
+      padding: 16px 18px 10px;
       text-align:center;
-      backdrop-filter: blur(10px);
-    }
-    .header h1{
-      font-size:20px;
-      font-weight:900;
-      letter-spacing:-1px;
-      text-transform:uppercase;
-      color:var(--accent);
-    }
-    .header .sub{
-      margin-top:6px;
-      font-size:12px;
-      color:var(--muted);
-      text-transform:lowercase;
-      font-weight:600;
     }
 
-    .tab-nav{
-      display:flex;
-      background: rgba(18,25,6,0.35);
-      border-bottom:1px solid rgba(255,255,255,0.10);
-      backdrop-filter: blur(10px);
-    }
-    .tab-button{
-      flex:1;
-      padding:14px 8px;
-      background:none;
-      border:none;
-      font-size:13px;
-      font-weight:900;
-      text-transform:lowercase;
-      color:var(--muted2);
-      cursor:pointer;
-      transition:all .2s;
-      border-bottom:2px solid transparent;
-      letter-spacing:-0.2px;
-    }
-    .tab-button.active{
-      color:var(--accent);
-      border-bottom-color:var(--accent);
+    .header h1{
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 1px;
     }
 
     .content{
       flex:1;
       overflow-y:auto;
-      padding:20px;
-    }
-
-    .tab-content{ display:none; animation:fadeIn .25s; }
-    .tab-content.active{ display:block; }
-    @keyframes fadeIn{
-      from{ opacity:0; transform:translateY(8px); }
-      to{ opacity:1; transform:translateY(0); }
+      padding: 14px 16px 86px;
     }
 
     .card{
-      background: linear-gradient(180deg, rgba(58,83,16,0.75), rgba(47,67,12,0.75));
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius:16px;
-      padding:20px;
-      margin-bottom:16px;
-      box-shadow:0 10px 24px rgba(0,0,0,0.18);
-      backdrop-filter: blur(10px);
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-bottom: 14px;
+      backdrop-filter: blur(8px);
     }
 
-    /* today */
-    .streak-display{ position:relative; text-align:center; padding:22px; }
-    .countdown-timer{
-      position:absolute; top:14px; right:14px;
-      font-size:11px;
-      color:var(--muted);
-      text-transform:lowercase;
-      background: rgba(255,255,255,0.10);
-      padding:6px 10px;
-      border-radius:8px;
-      font-weight:900;
-      letter-spacing:-0.2px;
-    }
-    .countdown-timer.urgent{
-      background: rgba(255,80,80,0.18);
-      color:#ffd7d7;
-      border:1px solid rgba(255,120,120,0.25);
+    .subtle{
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
     }
 
-    .streak-number{
-      font-size:56px;
-      font-weight:900;
-      color:var(--accent);
-      line-height:1;
-      letter-spacing:-1px;
-    }
-    .streak-label{
-      font-size:12px;
-      text-transform:lowercase;
-      color:var(--muted);
-      margin-top:6px;
-      letter-spacing:1px;
-      font-weight:600;
-    }
-    .tasks-left{
-      margin-top:10px;
-      font-size:13px;
-      color:#fff;
-      text-transform:lowercase;
-      font-weight:900;
-    }
-    .date-display{
-      text-align:center;
-      font-size:14px;
-      color:var(--muted);
-      text-transform:lowercase;
-      margin:10px 0 16px;
-      font-weight:600;
+    .row{
+      display:flex;
+      gap: 10px;
+      align-items:stretch;
     }
 
-    canvas{ width:100%; height:190px; display:block; }
-
-    .stats-grid{
+    .stats{
       display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:12px;
-    }
-    .stat-card{
-      background: rgba(255,255,255,0.07);
-      border:1px solid rgba(255,255,255,0.10);
-      border-radius:12px;
-      padding:14px;
-      text-align:center;
-    }
-    .stat-value{
-      font-size:26px;
-      font-weight:900;
-      color:var(--accent);
-      line-height:1.1;
-      letter-spacing:-1px;
-    }
-    .stat-label{
-      font-size:11px;
-      text-transform:lowercase;
-      color:var(--muted);
-      margin-top:4px;
-      font-weight:900;
-      letter-spacing:0.4px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
 
-    /* checklist */
+    .stat{
+      padding: 14px 12px;
+      text-align:center;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.25);
+    }
+    .stat .value{
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat .label{
+      margin-top: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: lowercase;
+    }
+
+    .countdown{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.25);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .pill .time{
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .chart-wrap{
+      padding: 12px;
+    }
+    canvas{
+      width:100%;
+      height: 210px;
+      display:block;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.20);
+      border: 1px solid var(--card-border);
+    }
+
+    .date{
+      text-align:center;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: lowercase;
+      margin-top: 2px;
+    }
+
     .checklist-item{
       display:flex;
       align-items:center;
-      padding:14px 0;
-      border-bottom:1px solid rgba(255,255,255,0.08);
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(71,99,19,0.12);
+      gap: 10px;
     }
-    .checklist-item:last-child{ border-bottom:none; }
+    .checklist-item:last-child{ border-bottom: none; }
 
     .checkbox{
       appearance:none;
-      width:24px; height:24px;
-      border:2px solid rgba(255,255,255,0.25);
-      border-radius:7px;
+      width: 24px; height: 24px;
+      border-radius: 7px;
+      border: 2px solid rgba(71,99,19,0.35);
+      background: rgba(255,255,255,0.20);
       cursor:pointer;
-      transition:all .15s;
       position:relative;
-      margin-right:14px;
-      flex:0 0 auto;
-      background: rgba(0,0,0,0.12);
+      flex: 0 0 auto;
     }
     .checkbox:checked{
-      background:var(--accent);
-      border-color:var(--accent);
+      border-color: var(--accent);
+      background: rgba(237,168,238,0.25);
     }
     .checkbox:checked::after{
       content:'✓';
       position:absolute;
-      top:50%; left:50%;
-      transform:translate(-50%,-50%);
-      color:var(--ink);
-      font-size:14px;
-      font-weight:900;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 14px;
     }
-    .checklist-label{
+
+    .label{
       flex:1;
-      font-size:15px;
-      color:#fff;
-      text-transform:lowercase;
-      font-weight:600;
-      line-height:1.25;
-      letter-spacing:-0.2px;
+      font-weight: 500;
+      text-transform: lowercase;
+      color: var(--ink);
+      font-size: 14px;
     }
-    .meta{
-      font-size:12px;
-      color:var(--accent);
-      font-weight:900;
-      margin-left:8px;
-      text-transform:lowercase;
+
+    .water-target{
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 12px;
     }
 
     textarea{
       width:100%;
-      min-height:110px;
-      padding:12px;
-      border:1px solid rgba(255,255,255,0.18);
-      border-radius:12px;
-      font-family:inherit;
-      font-size:14px;
-      resize:vertical;
-      outline:none;
-      background: rgba(0,0,0,0.14);
-      color:#fff;
-    }
-    textarea::placeholder{ color: rgba(255,255,255,0.55); }
-    textarea:focus{ border-color: rgba(226,242,170,0.55); }
-
-    .bedtime-reminder{
-      text-align:center;
-      font-size:12px;
-      color:var(--muted);
-      margin:10px 0 12px;
-      text-transform:lowercase;
-      font-weight:600;
+      min-height: 100px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.25);
+      padding: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--ink);
+      resize: vertical;
+      outline: none;
     }
 
     .btn{
       width:100%;
-      padding:16px;
-      border:none;
-      border-radius:14px;
-      font-size:15px;
-      font-weight:900;
-      text-transform:lowercase;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(237,168,238,0.30);
+      background: rgba(237,168,238,0.22);
+      color: var(--ink);
+      font-weight: 600;
       cursor:pointer;
-      transition:all .15s;
-      letter-spacing:-0.2px;
+      transition: transform .12s ease, opacity .12s ease;
     }
-    .btn.primary{
-      background:var(--accent);
-      color:var(--ink);
-      box-shadow:0 10px 22px rgba(226,242,170,0.18);
-    }
-    .btn.primary:hover{ transform:translateY(-1px); opacity:0.96; }
+    .btn:active{ transform: scale(0.99); }
+    .btn[disabled]{ opacity: 0.45; cursor:not-allowed; }
 
-    .btn.secondary{
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.16);
-      color:#fff;
-    }
-    .btn.secondary:hover{ transform:translateY(-1px); opacity:0.96; }
-
-    .btn-row{
+    /* tabs bottom */
+    .tabs{
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
       display:flex;
-      gap:10px;
+      background: rgba(227,242,170,0.92);
+      border-top: 1px solid rgba(71,99,19,0.16);
+      padding: 10px 10px 14px;
+      gap: 10px;
+      backdrop-filter: blur(10px);
     }
-    .btn-row .btn{ width:auto; flex:1; }
-
-    /* settings */
-    .form-group{ margin-bottom:18px; }
-    .form-label{
-      display:block;
-      font-size:13px;
-      text-transform:lowercase;
-      color:var(--muted);
-      margin-bottom:8px;
-      font-weight:900;
-      letter-spacing:-0.2px;
-    }
-    input[type="text"], input[type="number"], input[type="time"], input[type="date"]{
-      width:100%;
-      padding:12px;
-      border:1px solid rgba(255,255,255,0.18);
-      border-radius:12px;
-      font-family:inherit;
-      font-size:14px;
-      outline:none;
-      background: rgba(0,0,0,0.14);
-      color:#fff;
-    }
-    input:focus{ border-color: rgba(226,242,170,0.55); }
-
-    .computed-value{
-      font-size:18px;
-      font-weight:900;
-      color:var(--accent);
-      padding:12px;
-      background: rgba(0,0,0,0.14);
-      border:1px solid rgba(255,255,255,0.10);
-      border-radius:12px;
-      text-align:center;
-      text-transform:lowercase;
-      letter-spacing:-0.2px;
-    }
-
-    .toggle-wrapper{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .toggle{
-      position:relative;
-      width:48px; height:28px;
+    .tab{
+      flex:1;
+      border-radius: 14px;
+      border: 1px solid rgba(71,99,19,0.18);
       background: rgba(255,255,255,0.18);
-      border-radius:14px;
+      padding: 10px 10px;
+      font-weight: 600;
+      color: var(--ink);
       cursor:pointer;
-      transition:background .15s;
-      flex:0 0 auto;
-      border:1px solid rgba(255,255,255,0.12);
+      text-transform: lowercase;
     }
-    .toggle.active{ background: rgba(226,242,170,0.55); border-color: rgba(226,242,170,0.55); }
-    .toggle-slider{
-      position:absolute;
-      top:3px; left:3px;
-      width:22px; height:22px;
-      background:#fff;
-      border-radius:50%;
-      transition:transform .15s;
+    .tab.active{
+      border-color: rgba(237,168,238,0.45);
+      background: rgba(237,168,238,0.18);
+      color: var(--accent);
     }
-    .toggle.active .toggle-slider{ transform:translateX(20px); background: var(--accent); }
 
-    .calendar-link{
-      display:block;
-      padding:14px;
-      margin-top:10px;
-      background: rgba(0,0,0,0.14);
-      border:1px solid rgba(255,255,255,0.12);
-      border-radius:12px;
-      text-decoration:none;
-      color:var(--accent);
-      font-size:14px;
-      text-align:center;
-      font-weight:900;
-      text-transform:lowercase;
-      transition:all .15s;
-      letter-spacing:-0.2px;
-    }
-    .calendar-link:hover{
-      background: rgba(226,242,170,0.18);
-      transform:translateY(-1px);
-    }
+    /* sections */
+    .section{ display:none; }
+    .section.active{ display:block; }
 
     /* rules */
-    .rules-card{ line-height:1.7; }
-    .rules-card h2{
-      font-size:20px;
-      font-weight:900;
-      text-transform:uppercase;
-      color:var(--accent);
-      margin-bottom:14px;
+    .rules h2{
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--accent);
       text-align:center;
-      letter-spacing:-1px;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
     }
-    .rules-card h3{
-      font-size:14px;
-      font-weight:900;
-      text-transform:lowercase;
-      color:#fff;
-      margin-top:14px;
-      margin-bottom:8px;
-      letter-spacing:-0.2px;
+    .rules h3{
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-top: 14px;
+      margin-bottom: 8px;
+      text-transform: lowercase;
     }
-    .rules-card p, .rules-card li{
-      font-size:14px;
-      color:var(--muted);
-      text-transform:lowercase;
-      font-weight:700;
-      letter-spacing:-0.1px;
+    .rules p, .rules li{
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      line-height: 1.65;
     }
-    .rules-card ol{ margin-left:18px; }
+    .rules ol{
+      margin-left: 18px;
+      margin-top: 6px;
+      margin-bottom: 8px;
+    }
 
-    /* modal */
+    /* overlay modal */
     .overlay{
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.55);
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
       display:none;
       align-items:center;
       justify-content:center;
-      z-index:3000;
-      padding:20px;
+      padding: 18px;
+      z-index: 999;
     }
     .overlay.active{ display:flex; }
 
     .modal{
-      width:100%;
-      max-width:380px;
-      background: rgba(18,25,6,0.75);
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius:18px;
-      padding:22px;
+      width: min(360px, 92vw);
+      background: rgba(255,255,255,0.92);
+      border-radius: 18px;
+      border: 1px solid rgba(71,99,19,0.18);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.18);
+      padding: 18px;
       text-align:center;
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
-      backdrop-filter: blur(12px);
     }
-    .modal .icon{ font-size:44px; margin-bottom:10px; }
+    .modal .icon{
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
     .modal .title{
-      font-size:16px;
-      font-weight:900;
-      color:#fff;
-      text-transform:lowercase;
-      letter-spacing:-0.6px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
     }
     .modal .text{
-      margin-top:8px;
-      font-size:14px;
-      color:var(--muted);
-      line-height:1.45;
-      text-transform:lowercase;
-      font-weight:700;
-    }
-
-    /* share overlay + share card */
-    .share-card{
-      width:100%;
-      max-width:420px;
-      background: linear-gradient(135deg, #5b7c1a 0%, var(--bg) 70%);
-      border-radius:20px;
-      border: 1px solid rgba(255,255,255,0.14);
-      padding:18px;
-      text-align:left;
-    }
-    .share-header{
-      text-transform:uppercase;
-      color:var(--accent);
-      font-weight:900;
-      letter-spacing:-0.6px;
-      font-size:14px;
-      margin-bottom:10px;
-    }
-    .share-sub{
-      color:rgba(255,255,255,0.85);
-      font-weight:600;
-      font-size:12px;
-      margin-top:2px;
-      text-transform:lowercase;
-    }
-    .share-kpis{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      margin:10px 0 12px;
-    }
-    .share-kpi{
-      background: rgba(0,0,0,0.18);
-      border:1px solid rgba(255,255,255,0.10);
-      border-radius:14px;
-      padding:10px;
-      text-align:center;
-    }
-    .share-kpi .v{
-      color:var(--accent);
-      font-weight:900;
-      font-size:18px;
-      letter-spacing:-0.8px;
-    }
-    .share-kpi .l{
-      color:rgba(255,255,255,0.75);
-      font-weight:900;
-      font-size:10px;
-      text-transform:lowercase;
-      margin-top:2px;
-    }
-    .share-rules{
-      margin-top:12px;
-      font-size:10px;
-      line-height:1.4;
-      color:rgba(255,255,255,0.75);
-      text-transform:lowercase;
-      font-weight:600;
-      border-top:1px solid rgba(255,255,255,0.14);
-      padding-top:10px;
-    }
-    .share-canvas{
-      width:100%;
-      height:220px;
-      display:block;
-      border-radius:14px;
-      background: rgba(0,0,0,0.18);
-      border:1px solid rgba(255,255,255,0.10);
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(71,99,19,0.75);
+      line-height: 1.5;
+      margin-bottom: 12px;
     }
   </style>
 </head>
 
 <body>
-  <!-- splash -->
-  <div class="splash-screen" id="splash-screen">
-    <video class="splash-video" id="splash-video" autoplay muted loop playsinline>
-      <source src="splash.mp4" type="video/mp4">
-    </video>
-    <div class="splash-orb" aria-hidden="true"></div>
-
-    <div class="splash-card">
-      <div class="splash-title">75 GIFTED</div>
-      <div class="splash-sub">a 75-day spiritual discipline challenge.</div>
-      <div class="splash-actions">
-        <button class="splash-btn secondary" id="open-settings-btn">day 1 setup</button>
-        <button class="splash-btn primary" id="open-main-btn">log day</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- app -->
-  <div class="app-container" id="app-container">
-    <div class="header">
+  <div class="app">
+    <header class="header">
       <h1>75 GIFTED</h1>
-      <div class="sub" id="header-sub">stay gifted.</div>
-    </div>
+    </header>
 
-    <nav class="tab-nav">
-      <button class="tab-button active" data-tab="today">today</button>
-      <button class="tab-button" data-tab="settings">settings</button>
-      <button class="tab-button" data-tab="rules">rules</button>
-    </nav>
-
-    <div class="content">
-      <!-- today -->
-      <div id="today-tab" class="tab-content active">
+    <main class="content">
+      <!-- TODAY -->
+      <section id="today" class="section active">
         <div class="card">
+          <div class="countdown">
+            <div>
+              <div class="subtle">today</div>
+              <div class="date" id="today-date">—</div>
+            </div>
+            <div class="pill" title="time until bedtime">
+              bedtime in <span class="time" id="countdown">--:--:--</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card chart-wrap">
           <canvas id="streak-chart"></canvas>
-        </div>
-
-        <div class="stats-grid" style="margin-bottom:16px;">
-          <div class="stat-card">
-            <div class="stat-value" id="stat-current">0</div>
-            <div class="stat-label">current</div>
+          <div class="subtle" style="margin-top:10px; text-align:center;">
+            streak ascension chart (resets to 0 on loss)
           </div>
-          <div class="stat-card">
-            <div class="stat-value" id="stat-longest">0</div>
-            <div class="stat-label">longest</div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="value" id="stat-current">0</div>
+            <div class="label">current</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-value" id="stat-wins">0</div>
-            <div class="stat-label">days elapsed</div>
-          </div> function getDaysElapsed() {
-  if (!appState.settings.startDate) return 0;
-
-  const start = new Date(appState.settings.startDate + 'T00:00:00');
-  const today = new Date();
-  today.setHours(0,0,0,0);
-
-  const diffMs = today - start;
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1;
-
-  return diffDays > 0 ? diffDays : 0;
-}
-
+          <div class="stat">
+            <div class="value" id="stat-longest">0</div>
+            <div class="label">longest</div>
+          </div>
+          <div class="stat">
+            <div class="value" id="stat-elapsed">0</div>
+            <div class="label">days elapsed</div>
+          </div>
         </div>
 
-        <div class="card streak-display">
-          <div class="countdown-timer" id="countdown-timer">--:--:--</div>
-          <div class="streak-number" id="current-streak">0</div>
-          <div class="streak-label">day streak</div>
-          <div class="tasks-left" id="tasks-left">7 tasks left</div>
-        </div>
+        <div class="card" style="margin-top:14px;">
+          <div class="subtle" style="margin-bottom:8px;">daily checklist</div>
 
-        <div class="date-display" id="today-date"></div>
-
-        <div class="card">
           <div class="checklist-item">
-            <input type="checkbox" class="checkbox" id="check-0">
-            <label for="check-0" class="checklist-label">pray fervently</label>
+            <input class="checkbox" type="checkbox" id="check-0">
+            <label class="label" for="check-0">pray fervently</label>
           </div>
 
           <div class="checklist-item">
-            <input type="checkbox" class="checkbox" id="check-1">
-            <label for="check-1" class="checklist-label">
-              drink enough water <span class="meta" id="water-target"></span>
+            <input class="checkbox" type="checkbox" id="check-1">
+            <label class="label" for="check-1">
+              drink enough water <span class="water-target" id="water-target"></span>
             </label>
           </div>
 
           <div class="checklist-item">
-            <input type="checkbox" class="checkbox" id="check-2">
-            <label for="check-2" class="checklist-label">read bible for 10 mins</label>
+            <input class="checkbox" type="checkbox" id="check-2">
+            <label class="label" for="check-2">read bible for 10 mins</label>
           </div>
 
           <div class="checklist-item">
-            <input type="checkbox" class="checkbox" id="check-3">
-            <label for="check-3" class="checklist-label">weekly generosity (where God calls)</label>
+            <input class="checkbox" type="checkbox" id="check-3">
+            <label class="label" for="check-3">serve weekly (where God calls)</label>
           </div>
 
           <div class="checklist-item">
-            <input type="checkbox" class="checkbox" id="check-4">
-            <label for="check-4" class="checklist-label" id="gift-label">share your gift publicly</label>
+            <input class="checkbox" type="checkbox" id="check-4">
+            <label class="label" for="check-4">share your gift publicly</label>
           </div>
 
           <div class="checklist-item">
-            <input type="checkbox" class="checkbox" id="check-5">
-            <label for="check-5" class="checklist-label">45 mins of movement</label>
+            <input class="checkbox" type="checkbox" id="check-5">
+            <label class="label" for="check-5">45 mins of movement</label>
           </div>
 
           <div class="checklist-item">
-            <input type="checkbox" class="checkbox" id="check-6">
-            <label for="check-6" class="checklist-label" id="vices-label">no vices or temptations</label>
+            <input class="checkbox" type="checkbox" id="check-6">
+            <label class="label" for="check-6">no vices / no compromises</label>
           </div>
         </div>
 
         <div class="card">
-          <div class="form-label" style="margin-bottom:10px;">reflection (optional but powerful)</div>
-          <textarea id="today-notes" placeholder="quick reflection:
-1) what did God highlight today?
-2) where did i resist discipline?
-3) what will i do differently tomorrow?
-4) one thing i'm grateful for..."></textarea>
+          <div class="subtle" style="margin-bottom:8px;">optional reflection</div>
+          <textarea id="today-notes" placeholder="quick reflection: what did God reveal today? where did you obey? where did you resist? what’s one win you’re grateful for?"></textarea>
         </div>
 
-        <div class="bedtime-reminder" id="bedtime-reminder"></div>
-
-          <button class="btn primary" id="end-day-btn">end day</button>
-        </div>
-      </div>
-
-      <!-- settings -->
-      <div id="settings-tab" class="tab-content">
         <div class="card">
-          <div class="form-group">
-            <label class="form-label" for="start-date">start date (optional)</label>
-            <input type="date" id="start-date">
+          <div class="subtle" id="endday-rule" style="margin-bottom:10px;">
+            within 2 hours of bedtime, press “end day.”
           </div>
+          <button class="btn" id="end-day-btn">end day</button>
+        </div>
+      </section>
 
-          <div class="form-group">
-            <label class="form-label" for="wakeup-time">wakeup time</label>
-            <input type="time" id="wakeup-time" value="06:00">
-          </div>
+      <!-- SETTINGS -->
+      <section id="settings" class="section">
+        <div class="card">
+          <div class="subtle" style="margin-bottom:10px;">setup (one time)</div>
 
-          <div class="form-group">
-            <label class="form-label" for="bedtime">bedtime</label>
-            <input type="time" id="bedtime" value="22:00">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="body-weight">body weight (lbs)</label>
-            <input type="number" id="body-weight" value="150" min="50" max="500">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="daily-gift">commit to one gift/talent you’ll actively share daily</label>
-            <input type="text" id="daily-gift" placeholder="ex: encouragement reel, applying a skill, public speaking...">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="vices-text">name your specific vices/temptations to surrender</label>
-            <input type="text" id="vices-text" placeholder="ex: alcohol, scrolling, porn, weed, gossip, sugar...">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">water target</label>
-            <div class="computed-value" id="computed-water">0 oz</div>
-          </div>
-
-          <div class="form-group">
-            <div class="toggle-wrapper">
-              <label class="form-label" style="margin-bottom:0;">reminders</label>
+          <div style="display:grid; gap:12px;">
+            <div>
+              <div class="subtle">start date</div>
+              <input type="date" id="start-date" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--card-border); background: rgba(255,255,255,0.25); color: var(--ink); font-family: inherit; font-weight:600;">
             </div>
 
-            <div style="margin-top:10px; font-size:12px; color:rgba(255,255,255,0.70); text-transform:lowercase; font-weight:600;">
-              add calendar reminders (brownie points if you set them for daily reminder)
+            <div class="row">
+              <div style="flex:1;">
+                <div class="subtle">wakeup time</div>
+                <input type="time" id="wakeup-time" value="06:00" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--card-border); background: rgba(255,255,255,0.25); color: var(--ink); font-family: inherit; font-weight:600;">
+              </div>
+              <div style="flex:1;">
+                <div class="subtle">bedtime</div>
+                <input type="time" id="bedtime" value="22:00" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--card-border); background: rgba(255,255,255,0.25); color: var(--ink); font-family: inherit; font-weight:600;">
+              </div>
             </div>
 
-            <a class="calendar-link" id="wakeup-calendar" target="_blank" rel="noopener noreferrer" href="#">add wakeup reminder to calendar</a>
-            <a class="calendar-link" id="midday-calendar" target="_blank" rel="noopener noreferrer" href="#">add midday check-in to calendar</a>
-            <a class="calendar-link" id="bedtime-calendar" target="_blank" rel="noopener noreferrer" href="#">add final reminder to calendar</a>
+            <div>
+              <div class="subtle">body weight (lbs)</div>
+              <input type="number" id="body-weight" value="150" min="50" max="500" style="width:100%; padding:12px; border-radius:12px; border:1px solid var(--card-border); background: rgba(255,255,255,0.25); color: var(--ink); font-family: inherit; font-weight:600;">
+            </div>
+
+            <div class="card" style="margin:0; background: rgba(255,255,255,0.22);">
+              <div class="subtle" style="text-align:center;">water goal</div>
+              <div style="text-align:center; font-size:22px; font-weight:600; color: var(--accent); margin-top:6px;" id="computed-water">0 oz</div>
+              <div class="subtle" style="text-align:center; margin-top:6px;">rule: 1/2 bodyweight in oz + 8 oz (daily movement)</div>
+            </div>
+
+            <button class="btn" id="save-settings-btn">save settings</button>
           </div>
         </div>
+      </section>
 
-        <button class="btn secondary" id="finish-setup-btn">finish setup</button>
-      </div>
-
-      <!-- rules -->
-      <div id="rules-tab" class="tab-content">
-        <div class="card rules-card">
+      <!-- RULES -->
+      <section id="rules" class="section">
+        <div class="card rules">
           <h2>75 GIFTED</h2>
 
           <h3>daily mission</h3>
@@ -846,79 +491,39 @@
           <p>reach 75 consecutive days of victory. grow your gifts.</p>
           <p>you got this! love, ki</p>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
+
+    <!-- bottom tabs -->
+    <nav class="tabs">
+      <button class="tab active" data-tab="today">today</button>
+      <button class="tab" data-tab="settings">settings</button>
+      <button class="tab" data-tab="rules">rules</button>
+    </nav>
   </div>
 
   <!-- modal -->
-  <div class="overlay" id="message-overlay">
+  <div class="overlay" id="overlay">
     <div class="modal">
-      <div class="icon" id="message-icon">✓</div>
-      <div class="title" id="message-title">ok</div>
-      <div class="text" id="message-text">message</div>
-      <div style="margin-top:14px;">
-        <button class="btn primary" id="message-ok">continue</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- share overlay -->
-  <div class="overlay" id="share-overlay">
-    <div class="modal" style="max-width:460px; text-align:left;">
-      <div class="share-card" id="share-card">
-        <div class="share-header">75 GIFTED, a 75 day spiritual discipline challenge</div>
-        <div class="share-sub" id="share-date"></div>
-
-        <canvas class="share-canvas" id="share-canvas"></canvas>
-
-        <div class="share-kpis">
-          <div class="share-kpi">
-            <div class="v" id="share-current">0</div>
-            <div class="l">current</div>
-          </div>
-          <div class="share-kpi">
-            <div class="v" id="share-longest">0</div>
-            <div class="l">longest</div>
-          </div>
-          <div class="share-kpi">
-            <div class="v" id="share-left">0</div>
-            <div class="l">tasks left</div>
-          </div>
-        </div>
-
-        <div class="share-rules">
-          rules: complete all 7 items before bedtime. within 2 hours of bedtime press “end day.”
-          all checked = win + streak rises. missing any = loss + reset to 0. no pausing.
-        </div>
-      </div>
-
-      <div class="btn-row" style="margin-top:12px;">
-        <button class="btn secondary" id="download-share-btn">download png</button>
-        <button class="btn primary" id="native-share-btn">share</button>
-      </div>
-
-      <div style="margin-top:10px;">
-        <button class="btn secondary" id="close-share-btn">close</button>
-      </div>
+      <div class="icon" id="modal-icon">✓</div>
+      <div class="title" id="modal-title">message</div>
+      <div class="text" id="modal-text">—</div>
+      <button class="btn" id="modal-ok">ok</button>
     </div>
   </div>
 
   <script>
-    const APP_DATA_KEY = '75_gifted_data_v5';
+    const APP_DATA_KEY = '75_gifted_data_v2';
 
-    const defaultState = {
+    const DEFAULT_STATE = {
       currentStreak: 0,
       longestStreak: 0,
-      history: [],
+      history: [], // [{date, completed, streakAfter, notes}]
       settings: {
-        onboarded: false,
         startDate: null,
         wakeupTime: '06:00',
         bedtime: '22:00',
-        bodyWeight: 150,
-        : false,
-        dailyGift: '',
-        vicesText: ''
+        bodyWeight: 150
       },
       today: {
         date: null,
@@ -928,453 +533,305 @@
       }
     };
 
-    let appState = structuredClone(defaultState);
-
-    function saveData(){ localStorage.setItem(APP_DATA_KEY, JSON.stringify(appState)); }
-    function loadData(){
-      const saved = localStorage.getItem(APP_DATA_KEY);
-      if (saved){
-        try { appState = { ...appState, ...JSON.parse(saved) }; }
-        catch { appState = structuredClone(defaultState); }
-      }
-    }
+    let appState = structuredClone(DEFAULT_STATE);
 
     function getTodayString(){
       const now = new Date();
       return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
     }
-    function addDays(dateStr, days){
-      const d = new Date(dateStr + 'T00:00:00');
-      d.setDate(d.getDate() + days);
-      return d.toISOString().slice(0,10);
-    }
-    function formatDate(dateStr){
-      const d = new Date(dateStr + 'T00:00:00');
-      return d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' }).toLowerCase();
+
+    function loadData(){
+      const saved = localStorage.getItem(APP_DATA_KEY);
+      if (saved){
+        try{
+          const parsed = JSON.parse(saved);
+          appState = { ...structuredClone(DEFAULT_STATE), ...parsed };
+          appState.settings = { ...DEFAULT_STATE.settings, ...(parsed.settings || {}) };
+          appState.today = { ...DEFAULT_STATE.today, ...(parsed.today || {}) };
+          if (!Array.isArray(appState.today.checks) || appState.today.checks.length !== 7){
+            appState.today.checks = [false,false,false,false,false,false,false];
+          }
+        } catch(e){
+          appState = structuredClone(DEFAULT_STATE);
+        }
+      }
+      checkNewDayAndAutoResetIfMissed();
     }
 
-    function waterTargetOz(){
-      return Math.round((Number(appState.settings.bodyWeight || 0) / 2) + 8);
+    function saveData(){
+      localStorage.setItem(APP_DATA_KEY, JSON.stringify(appState));
     }
 
-    function showModal(icon, title, text){
-      document.getElementById('message-icon').textContent = icon;
-      document.getElementById('message-title').textContent = title;
-      document.getElementById('message-text').textContent = text;
-      document.getElementById('message-overlay').classList.add('active');
-    }
-    function hideModal(){ document.getElementById('message-overlay').classList.remove('active'); }
-
-    function showSplash(){
-      document.getElementById('splash-screen').classList.add('active');
-      document.getElementById('app-container').style.display = 'none';
-    }
-    function hideSplash(){
-      document.getElementById('splash-screen').classList.remove('active');
-      document.getElementById('app-container').style.display = 'flex';
+    function midnightify(d){
+      const x = new Date(d);
+      x.setHours(0,0,0,0);
+      return x;
     }
 
-    function initSplashVideo(){
-      const vid = document.getElementById('splash-video');
-      if (!vid) return;
-      vid.addEventListener('canplay', () => { vid.style.display = 'block'; });
-      vid.addEventListener('error', () => { vid.style.display = 'none'; });
-      vid.play().catch(()=>{});
+    function daysBetweenInclusive(startDateStr, endDateStr){
+      if (!startDateStr) return 0;
+      const start = midnightify(new Date(startDateStr + 'T00:00:00'));
+      const end = midnightify(new Date(endDateStr + 'T00:00:00'));
+      const diff = Math.floor((end - start) / (1000*60*60*24)) + 1;
+      return diff > 0 ? diff : 0;
     }
 
-    function openTab(name){
-      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      const btn = document.querySelector(`.tab-button[data-tab="${name}"]`);
-      const tab = document.getElementById(`${name}-tab`);
-      if (btn) btn.classList.add('active');
-      if (tab) tab.classList.add('active');
-      if (name === 'today') setTimeout(drawChart, 30);
+    function getDaysElapsed(){
+      if (!appState.settings.startDate) return 0;
+      return daysBetweenInclusive(appState.settings.startDate, getTodayString());
     }
 
-    function checkNewDayAndMisses(){
+    // if a day passes and they never ended the day, treat it as a loss + reset
+    function checkNewDayAndAutoResetIfMissed(){
       const today = getTodayString();
 
-      if (!appState.today.date){
-        appState.today.date = today;
-        saveData();
-        return;
-      }
-      if (appState.today.date === today) return;
-
-      if (!appState.today.ended){
-        appState.history.push({ date: appState.today.date, completed:false, streakAfter:0, notes: appState.today.notes || '' });
+      if (appState.today.date && appState.today.date !== today && !appState.today.ended){
+        appState.history.push({
+          date: appState.today.date,
+          completed: false,
+          streakAfter: 0,
+          notes: appState.today.notes || ''
+        });
         appState.currentStreak = 0;
       }
 
-      let cursor = addDays(appState.today.date, 1);
-      while (cursor !== today){
-        appState.history.push({ date: cursor, completed:false, streakAfter:0, notes:'' });
-        cursor = addDays(cursor, 1);
+      if (appState.today.date !== today){
+        appState.today = {
+          date: today,
+          checks: [false,false,false,false,false,false,false],
+          notes: '',
+          ended: false
+        };
+        saveData();
       }
-
-      appState.today = { date: today, checks:[false,false,false,false,false,false,false], notes:'', ended:false };
-      saveData();
     }
 
-    function updateBedtimeCountdown(){
-      const el = document.getElementById('countdown-timer');
-      const [bh, bm] = appState.settings.bedtime.split(':').map(n => parseInt(n,10));
+    function formatDate(dateStr){
+      const date = new Date(dateStr + 'T00:00:00');
+      return date.toLocaleDateString('en-US', {
+        weekday:'long', month:'long', day:'numeric', year:'numeric'
+      }).toLowerCase();
+    }
+
+    function computeWaterOz(){
+      const bw = Number(appState.settings.bodyWeight) || 150;
+      // rule: 1/2 bodyweight + 8 oz (daily movement)
+      return Math.round((bw * 0.5) + 8);
+    }
+
+    function minutesFromHHMM(hhmm){
+      const [h,m] = String(hhmm||'00:00').split(':').map(Number);
+      return (h*60) + (m||0);
+    }
+
+    function formatHMS(ms){
+      const total = Math.max(0, Math.floor(ms/1000));
+      const h = String(Math.floor(total/3600)).padStart(2,'0');
+      const m = String(Math.floor((total%3600)/60)).padStart(2,'0');
+      const s = String(total%60).padStart(2,'0');
+      return `${h}:${m}:${s}`;
+    }
+
+    function getMsUntilBedtime(){
       const now = new Date();
-      const bedtime = new Date(now);
-      bedtime.setHours(bh, bm, 0, 0);
+      const [bh,bm] = String(appState.settings.bedtime || '22:00').split(':').map(Number);
+      const bed = new Date();
+      bed.setHours(bh||22, bm||0, 0, 0);
 
-      const diffMs = bedtime - now;
-      if (diffMs <= 0){
-        el.textContent = '00:00:00';
-        el.classList.add('urgent');
-        return;
-      }
-
-      const totalSeconds = Math.floor(diffMs / 1000);
-      const hrs = Math.floor(totalSeconds / 3600);
-      const mins = Math.floor((totalSeconds % 3600) / 60);
-      const secs = totalSeconds % 60;
-
-      el.textContent = `${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
-
-      if (totalSeconds <= 3600) el.classList.add('urgent');
-      else el.classList.remove('urgent');
+      // if bedtime already passed today, show 0 (they missed window)
+      return bed - now;
     }
 
-    function isWithinBedtimeWindow(){
+    function canEndDayNow(){
       const now = new Date();
       const currentMins = now.getHours()*60 + now.getMinutes();
-      const [bh, bm] = appState.settings.bedtime.split(':').map(n => parseInt(n,10));
-      const bedtimeMins = bh*60 + bm;
-      return currentMins >= (bedtimeMins - 120);
+      const bedtimeMins = minutesFromHHMM(appState.settings.bedtime || '22:00');
+
+      // within 2 hours of bedtime
+      return currentMins >= (bedtimeMins - 120) && currentMins <= bedtimeMins;
     }
 
-    function updateTasksLeft(){
-      const left = appState.today.checks.filter(v => !v).length;
-      document.getElementById('tasks-left').textContent = `${left} task${left===1?'':'s'} left`;
-      return left;
+    function showModal(icon, title, text){
+      document.getElementById('modal-icon').textContent = icon;
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-text').textContent = text;
+      document.getElementById('overlay').classList.add('active');
     }
 
-    function updateCalendarLinks(){
-      const today = new Date();
-      const dateStr = today.toISOString().split('T')[0].replace(/-/g,'');
+    document.getElementById('modal-ok').addEventListener('click', () => {
+      document.getElementById('overlay').classList.remove('active');
+    });
 
-      const wake = appState.settings.wakeupTime.split(':').map(Number);
-      const bed  = appState.settings.bedtime.split(':').map(Number);
-
-      const wakeM = wake[0]*60 + wake[1];
-      const bedM  = bed[0]*60 + bed[1];
-
-      const middayM = Math.floor((wakeM + bedM)/2);
-      const lastLapM = bedM - 60;
-
-      function hhmm(mins){
-        const h = String(Math.floor(mins/60)).padStart(2,'0');
-        const m = String(mins%60).padStart(2,'0');
-        return [h,m];
-      }
-      function endBlock(mins){
-        const [eh, em] = hhmm(mins + 60);
-        return `${eh}${em}00`;
-      }
-
-      const wakeStart = `${String(wake[0]).padStart(2,'0')}${String(wake[1]).padStart(2,'0')}00`;
-      const wakeEnd   = endBlock(wakeM);
-
-      const [midH, midMin] = hhmm(middayM);
-      const midStart  = `${midH}${midMin}00`;
-      const midEnd    = endBlock(middayM);
-
-      const [lapH, lapMin] = hhmm(lastLapM);
-      const lapStart  = `${lapH}${lapMin}00`;
-      const lapEnd    = endBlock(lastLapM);
-
-      document.getElementById('wakeup-calendar').href =
-        `https://calendar.google.com/calendar/render?action=TEMPLATE&text=75+GIFTED:+Rise+%26+Seek&details=rise+%26+seek.+today+is+75+gifted.&dates=${dateStr}T${wakeStart}/${dateStr}T${wakeEnd}&recur=RRULE:FREQ=DAILY`;
-
-      document.getElementById('midday-calendar').href =
-        `https://calendar.google.com/calendar/render?action=TEMPLATE&text=75+GIFTED:+Midday+Check-In&details=midday+check-in.+finish+your+7.&dates=${dateStr}T${midStart}/${dateStr}T${midEnd}&recur=RRULE:FREQ=DAILY`;
-
-      document.getElementById('bedtime-calendar').href =
-        `https://calendar.google.com/calendar/render?action=TEMPLATE&text=75+GIFTED:+Last+Lap&details=last+lap.+finish+your+7.&dates=${dateStr}T${lapStart}/${dateStr}T${lapEnd}&recur=RRULE:FREQ=DAILY`;
-    }
-
+    // UI updates
     function updateTodayUI(){
-      document.getElementById('current-streak').textContent = appState.currentStreak;
       document.getElementById('today-date').textContent = formatDate(appState.today.date);
 
-      document.getElementById('stat-current').textContent = appState.currentStreak;
-      document.getElementById('stat-longest').textContent = appState.longestStreak;
-      document.getElementById('stat-wins').textContent = appState.history.filter(h => h.completed).length;
-
-      document.getElementById('water-target').textContent = `(${waterTargetOz()} oz)`;
-
-      const gift = (appState.settings.dailyGift || '').trim();
-      document.getElementById('gift-label').textContent = gift ? `share your gift: ${gift}` : 'share your gift publicly';
-
-      const vices = (appState.settings.vicesText || '').trim();
-      document.getElementById('vices-label').textContent = vices ? `no vices: ${vices}` : 'no vices or temptations';
+      const waterOz = computeWaterOz();
+      document.getElementById('water-target').textContent = `(${waterOz} oz)`;
 
       for (let i=0;i<7;i++){
-        document.getElementById(`check-${i}`).checked = !!appState.today.checks[i];
+        const el = document.getElementById(`check-${i}`);
+        el.checked = !!appState.today.checks[i];
       }
 
       document.getElementById('today-notes').value = appState.today.notes || '';
-      document.getElementById('bedtime-reminder').textContent = `all seven before bedtime: ${appState.settings.bedtime}`;
 
-      updateTasksLeft();
-      updateBedtimeCountdown();
+      document.getElementById('stat-current').textContent = appState.currentStreak;
+      document.getElementById('stat-longest').textContent = appState.longestStreak;
+      document.getElementById('stat-elapsed').textContent = getDaysElapsed();
+
+      // end day button lock
+      const btn = document.getElementById('end-day-btn');
+      btn.disabled = !canEndDayNow();
+
       drawChart();
     }
 
     function updateSettingsUI(){
       document.getElementById('start-date').value = appState.settings.startDate || '';
-      document.getElementById('wakeup-time').value = appState.settings.wakeupTime;
-      document.getElementById('bedtime').value = appState.settings.bedtime;
-      document.getElementById('body-weight').value = appState.settings.bodyWeight;
-      document.getElementById('daily-gift').value = appState.settings.dailyGift || '';
-      document.getElementById('vices-text').value = appState.settings.vicesText || '';
+      document.getElementById('wakeup-time').value = appState.settings.wakeupTime || '06:00';
+      document.getElementById('bedtime').value = appState.settings.bedtime || '22:00';
+      document.getElementById('body-weight').value = appState.settings.bodyWeight || 150;
 
-      document.getElementById('computed-water').textContent = `${waterTargetOz()} oz (half bw + 8)`;
-
-      updateCalendarLinks();
+      document.getElementById('computed-water').textContent = `${computeWaterOz()} oz`;
     }
 
-    function markOnboardedIfReady(){
-      const ready =
-        appState.settings.wakeupTime &&
-        appState.settings.bedtime &&
-        Number(appState.settings.bodyWeight) > 0 &&
-        (appState.settings.dailyGift || '').trim().length > 0 &&
-        (appState.settings.vicesText || '').trim().length > 0;
-
-      if (ready && !appState.settings.onboarded){
-        appState.settings.onboarded = true;
-        saveData();
-      }
-      return ready;
-    }
-
+    // chart: uses history + today's potential point (optional)
     function drawChart(){
       const canvas = document.getElementById('streak-chart');
       const ctx = canvas.getContext('2d');
-      const dpr = window.devicePixelRatio || 1;
-      const rect = canvas.getBoundingClientRect();
 
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-
-      const width = rect.width;
-      const height = rect.height;
-
-      ctx.clearRect(0,0,width,height);
-
-      const data = appState.history.slice(-75);
-      if (data.length === 0){
-        ctx.fillStyle = 'rgba(255,255,255,0.75)';
-        ctx.font = '14px Montserrat, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('no ascension data yet', width/2, height/2);
-        return;
-      }
-
-      const maxStreak = Math.max(10, ...data.map(d => d.streakAfter), appState.currentStreak);
-      const padding = 34;
-      const chartW = width - padding*2;
-      const chartH = height - padding*2;
-
-      const xStep = chartW / Math.max(data.length-1, 1);
-      const yScale = chartH / maxStreak;
-
-      // grid
-      ctx.strokeStyle = 'rgba(255,255,255,0.10)';
-      ctx.lineWidth = 1;
-      for (let i=0;i<=4;i++){
-        const y = padding + (chartH/4)*i;
-        ctx.beginPath();
-        ctx.moveTo(padding, y);
-        ctx.lineTo(width-padding, y);
-        ctx.stroke();
-
-        const val = Math.round(maxStreak - (maxStreak/4)*i);
-        ctx.fillStyle = 'rgba(255,255,255,0.60)';
-        ctx.font = '11px Montserrat, sans-serif';
-        ctx.textAlign = 'right';
-        ctx.fillText(String(val), padding-8, y+4);
-      }
-
-      // line
-      ctx.strokeStyle = '#e2f2aa';
-      ctx.lineWidth = 2.8;
-      ctx.lineJoin = 'round';
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      data.forEach((p, idx) => {
-        const x = padding + idx*xStep;
-        const y = padding + chartH - (p.streakAfter*yScale);
-        if (idx===0) ctx.moveTo(x,y);
-        else ctx.lineTo(x,y);
-      });
-      ctx.stroke();
-
-      // dots
-      ctx.fillStyle = '#e2f2aa';
-      data.forEach((p, idx) => {
-        const x = padding + idx*xStep;
-        const y = padding + chartH - (p.streakAfter*yScale);
-        ctx.beginPath();
-        ctx.arc(x,y,3.2,0,Math.PI*2);
-        ctx.fill();
-      });
-    }
-
-    // --- share card drawing (canvas-only, no external libs) ---
-    function drawShareCanvas(){
-      const c = document.getElementById('share-canvas');
-      const ctx = c.getContext('2d');
-
-      const dpr = window.devicePixelRatio || 1;
-      const rect = c.getBoundingClientRect();
-      c.width = rect.width * dpr;
-      c.height = rect.height * dpr;
       ctx.setTransform(dpr,0,0,dpr,0,0);
 
       const w = rect.width;
       const h = rect.height;
 
-      // background
-      const grad = ctx.createLinearGradient(0,0,w,h);
-      grad.addColorStop(0, '#5b7c1a');
-      grad.addColorStop(1, '#476313');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0,0,w,h);
+      ctx.clearRect(0,0,w,h);
 
-      // inner panel
-      ctx.fillStyle = 'rgba(0,0,0,0.22)';
-      roundRect(ctx, 12, 12, w-24, h-24, 14);
-      ctx.fill();
+      const data = appState.history.slice(-75);
+      if (data.length === 0){
+        ctx.fillStyle = 'rgba(71,99,19,0.65)';
+        ctx.font = '600 14px Montserrat, system-ui, -apple-system, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('no chart data yet (end a day to start the line)', w/2, h/2);
+        return;
+      }
 
-      // mini chart area
-      const data = appState.history.slice(-30);
-      const maxStreak = Math.max(10, ...data.map(d => d.streakAfter), appState.currentStreak);
-
-      const pad = 26;
+      const maxVal = Math.max(10, ...data.map(d => d.streakAfter), appState.currentStreak);
+      const pad = 34;
       const cw = w - pad*2;
       const ch = h - pad*2;
 
       // grid
-      ctx.strokeStyle = 'rgba(255,255,255,0.10)';
+      ctx.strokeStyle = 'rgba(71,99,19,0.14)';
       ctx.lineWidth = 1;
-      for (let i=0;i<=4;i++){
-        const y = pad + (ch/4)*i;
+      for (let i=0;i<=5;i++){
+        const y = pad + (ch/5)*i;
         ctx.beginPath();
         ctx.moveTo(pad, y);
         ctx.lineTo(w-pad, y);
         ctx.stroke();
       }
 
-      if (data.length === 0){
-        ctx.fillStyle = 'rgba(255,255,255,0.75)';
-        ctx.font = '14px Montserrat, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('no data yet', w/2, h/2);
-        return;
-      }
-
-      const xStep = cw / Math.max(data.length-1, 1);
-      const yScale = ch / maxStreak;
-
       // line
-      ctx.strokeStyle = '#e2f2aa';
-      ctx.lineWidth = 3;
+      const xStep = cw / Math.max(data.length - 1, 1);
+      const yScale = ch / maxVal;
+
+      ctx.strokeStyle = 'rgba(237,168,238,0.95)';
+      ctx.lineWidth = 2.6;
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
       ctx.beginPath();
+
       data.forEach((p, idx) => {
         const x = pad + idx*xStep;
-        const y = pad + ch - (p.streakAfter*yScale);
-        if (idx===0) ctx.moveTo(x,y);
+        const y = pad + ch - (p.streakAfter * yScale);
+        if (idx === 0) ctx.moveTo(x,y);
         else ctx.lineTo(x,y);
       });
       ctx.stroke();
 
-      // dots
-      ctx.fillStyle = '#e2f2aa';
+      // points
+      ctx.fillStyle = 'rgba(237,168,238,0.95)';
       data.forEach((p, idx) => {
         const x = pad + idx*xStep;
-        const y = pad + ch - (p.streakAfter*yScale);
+        const y = pad + ch - (p.streakAfter * yScale);
         ctx.beginPath();
-        ctx.arc(x,y,3.4,0,Math.PI*2);
+        ctx.arc(x,y,2.8,0,Math.PI*2);
         ctx.fill();
       });
     }
 
-    function roundRect(ctx, x, y, w, h, r){
-      const radius = Math.min(r, w/2, h/2);
-      ctx.beginPath();
-      ctx.moveTo(x+radius, y);
-      ctx.arcTo(x+w, y, x+w, y+h, radius);
-      ctx.arcTo(x+w, y+h, x, y+h, radius);
-      ctx.arcTo(x, y+h, x, y, radius);
-      ctx.arcTo(x, y, x+w, y, radius);
-      ctx.closePath();
+    // countdown tick
+    function startCountdown(){
+      const el = document.getElementById('countdown');
+      function tick(){
+        const ms = getMsUntilBedtime();
+        el.textContent = formatHMS(ms);
+        document.getElementById('end-day-btn').disabled = !canEndDayNow();
+      }
+      tick();
+      setInterval(tick, 1000);
     }
 
-    function openShare(){
-      // fill share ui
-      document.getElementById('share-date').textContent = formatDate(appState.today.date);
-      document.getElementById('share-current').textContent = appState.currentStreak;
-      document.getElementById('share-longest').textContent = appState.longestStreak;
-      const left = appState.today.checks.filter(v => !v).length;
-      document.getElementById('share-left').textContent = left;
-
-      // draw chart onto share canvas
-      drawShareCanvas();
-
-      document.getElementById('share-overlay').classList.add('active');
-    }
-    function closeShare(){ document.getElementById('share-overlay').classList.remove('active'); }
-
-    function downloadSharePNG(){
-      const c = document.getElementById('share-canvas');
-      const url = c.toDataURL('image/png');
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `75-gifted-${appState.today.date}.png`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+    // handlers
+    for (let i=0;i<7;i++){
+      document.getElementById(`check-${i}`).addEventListener('change', (e) => {
+        appState.today.checks[i] = e.target.checked;
+        saveData();
+      });
     }
 
-    async function nativeShare(){
-      const c = document.getElementById('share-canvas');
-      if (!navigator.share){
-        showModal('📌', 'share', 'your browser doesn’t support native share. use download png instead.');
+    document.getElementById('today-notes').addEventListener('input', (e) => {
+      appState.today.notes = e.target.value;
+      saveData();
+    });
+
+    document.getElementById('save-settings-btn').addEventListener('click', () => {
+      // simple save action; actual inputs are saved on change below too
+      saveData();
+      updateTodayUI();
+      showModal('✅', 'saved', 'settings saved. now go win today.');
+    });
+
+    document.getElementById('start-date').addEventListener('change', (e) => {
+      appState.settings.startDate = e.target.value || null;
+      saveData();
+      updateTodayUI();
+    });
+
+    document.getElementById('wakeup-time').addEventListener('change', (e) => {
+      appState.settings.wakeupTime = e.target.value || '06:00';
+      saveData();
+    });
+
+    document.getElementById('bedtime').addEventListener('change', (e) => {
+      appState.settings.bedtime = e.target.value || '22:00';
+      saveData();
+      updateTodayUI();
+    });
+
+    document.getElementById('body-weight').addEventListener('input', (e) => {
+      appState.settings.bodyWeight = Number(e.target.value) || 150;
+      saveData();
+      updateSettingsUI();
+      updateTodayUI();
+    });
+
+    document.getElementById('end-day-btn').addEventListener('click', () => {
+      if (!canEndDayNow()){
+        showModal('⏳', 'not yet', 'you can only end the day within 2 hours of bedtime.');
         return;
       }
 
-      // convert canvas to blob -> file
-      const blob = await new Promise(res => c.toBlob(res, 'image/png'));
-      const file = new File([blob], `75-gifted-${appState.today.date}.png`, { type:'image/png' });
-
-      try{
-        await navigator.share({
-          title: '75 GIFTED',
-          text: '75 GIFTED, a 75 day spiritual discipline challenge',
-          files: [file]
-        });
-      } catch(e){
-        // user canceled or share failed
-      }
-    }
-
-    function endDay(){
       const allChecked = appState.today.checks.every(Boolean);
 
       if (allChecked){
-        appState.currentStreak++;
+        appState.currentStreak += 1;
         appState.longestStreak = Math.max(appState.longestStreak, appState.currentStreak);
 
         appState.history.push({
@@ -1385,8 +842,13 @@
         });
 
         appState.today.ended = true;
+        appState.today.checks = [false,false,false,false,false,false,false];
+        appState.today.notes = '';
+
         saveData();
-        showModal('🔥', 'day won', `all 7 complete. streak: ${appState.currentStreak}`);
+        showModal('🔥', 'win day', `all 7 completed. streak: ${appState.currentStreak}`);
+        checkNewDayAndAutoResetIfMissed();
+        updateTodayUI();
       } else {
         appState.currentStreak = 0;
 
@@ -1398,183 +860,39 @@
         });
 
         appState.today.ended = true;
+        appState.today.checks = [false,false,false,false,false,false,false];
+        appState.today.notes = '';
+
         saveData();
-        showModal('💔', 'day lost', 'not all items were completed. streak reset to 0.');
-      }
-
-      updateTodayUI();
-      updateSettingsUI();
-    }
-
-    // events
-    document.querySelectorAll('.tab-button').forEach(btn => {
-      btn.addEventListener('click', () => openTab(btn.dataset.tab));
-    });
-
-    for (let i=0;i<7;i++){
-      document.getElementById(`check-${i}`).addEventListener('change', (e) => {
-        appState.today.checks[i] = e.target.checked;
-        saveData();
-        updateTasksLeft();
-      });
-    }
-
-    document.getElementById('today-notes').addEventListener('input', (e) => {
-      appState.today.notes = e.target.value;
-      saveData();
-    });
-
-    document.getElementById('end-day-btn').addEventListener('click', () => {
-      if (!isWithinBedtimeWindow()){
-        showModal('⏳', 'too early', 'you can only end your day within 2 hours of bedtime. come back later.');
-        return;
-      }
-      endDay();
-    });
-
-    document.getElementById('share-progress-btn').addEventListener('click', openShare);
-    document.getElementById('close-share-btn').addEventListener('click', closeShare);
-    document.getElementById('download-share-btn').addEventListener('click', downloadSharePNG);
-    document.getElementById('native-share-btn').addEventListener('click', nativeShare);
-
-    document.getElementById('message-ok').addEventListener('click', hideModal);
-
-    document.getElementById('start-date').addEventListener('change', (e) => {
-      appState.settings.startDate = e.target.value || null;
-      saveData();
-    });
-
-    document.getElementById('wakeup-time').addEventListener('change', (e) => {
-      appState.settings.wakeupTime = e.target.value;
-      saveData();
-      updateSettingsUI();
-      markOnboardedIfReady();
-    });
-
-    document.getElementById('bedtime').addEventListener('change', (e) => {
-      appState.settings.bedtime = e.target.value;
-      saveData();
-      updateSettingsUI();
-      updateTodayUI();
-      markOnboardedIfReady();
-    });
-
-    document.getElementById('body-weight').addEventListener('input', (e) => {
-      appState.settings.bodyWeight = Number(e.target.value) || 150;
-      saveData();
-      updateSettingsUI();
-      updateTodayUI();
-      markOnboardedIfReady();
-    });
-
-    document.getElementById('daily-gift').addEventListener('input', (e) => {
-      appState.settings.dailyGift = e.target.value;
-      saveData();
-      updateTodayUI();
-      markOnboardedIfReady();
-    });
-
-    document.getElementById('vices-text').addEventListener('input', (e) => {
-      appState.settings.vicesText = e.target.value;
-      saveData();
-      updateTodayUI();
-      markOnboardedIfReady();
-    });
-
-    document.getElementById('reminders-toggle').addEventListener('click', () => {
-      appState.settings.reminders = !appState.settings.reminders;
-      saveData();
-      updateSettingsUI();
-    });
-
-    document.getElementById('finish-setup-btn').addEventListener('click', () => {
-      const ready = markOnboardedIfReady();
-      if (!ready){
-        showModal('🧩', 'finish setup', 'add your daily gift + your vices, plus bedtime + bodyweight.');
-        openTab('settings');
-        return;
-      }
-      showModal('✅', 'setup complete', 'all set! time to activate your God-given gifts!');
-      saveData();
-      showSplash();
-    });
-
-    // splash buttons
-    document.getElementById('open-main-btn').addEventListener('click', () => {
-      hideSplash();
-      if (!appState.settings.onboarded){
-        openTab('settings');
-      } else {
-        openTab('today');
+        showModal('💔', 'loss day', 'one missing. reset to 0. tomorrow we move like a steward.');
+        checkNewDayAndAutoResetIfMissed();
         updateTodayUI();
       }
     });
 
-    document.getElementById('open-settings-btn').addEventListener('click', () => {
-      hideSplash();
-      openTab('settings');
+    // bottom tabs
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+
+        document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(tab).classList.add('active');
+
+        // refresh chart when returning to today
+        if (tab === 'today') setTimeout(drawChart, 50);
+      });
     });
 
-    window.addEventListener('resize', () => {
-      drawChart();
-      if (document.getElementById('share-overlay').classList.contains('active')) drawShareCanvas();
-    });
+    window.addEventListener('resize', () => drawChart());
 
-    // dynamic manifest so it installs nicer on android/chrome
-    function setDynamicManifest(){
-      const svg = encodeURIComponent(`
-        <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
-          <defs>
-            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#5b7c1a"/>
-              <stop offset="1" stop-color="#476313"/>
-            </linearGradient>
-          </defs>
-          <rect width="512" height="512" rx="96" fill="url(#g)"/>
-          <circle cx="210" cy="210" r="140" fill="#e2f2aa" opacity="0.92"/>
-          <text x="256" y="315" text-anchor="middle" font-family="Montserrat, Arial" font-size="88" font-weight="900" fill="#0c1203">75</text>
-        </svg>
-      `);
-      const iconData = `data:image/svg+xml;charset=utf-8,${svg}`;
-
-      const manifest = {
-        name: "75 GIFTED",
-        short_name: "75 GIFTED",
-        start_url: ".",
-        display: "standalone",
-        background_color: "#476313",
-        theme_color: "#476313",
-        icons: [
-          { src: iconData, sizes: "192x192", type: "image/svg+xml" },
-          { src: iconData, sizes: "512x512", type: "image/svg+xml" }
-        ]
-      };
-
-      const blob = new Blob([JSON.stringify(manifest)], { type: "application/manifest+json" });
-      const url = URL.createObjectURL(blob);
-      const link = document.getElementById("manifest-link");
-      if (link) link.href = url;
-    }
-
-    function boot(){
-      loadData();
-      checkNewDayAndMisses();
-
-      setDynamicManifest();
-      initSplashVideo();
-
-      updateSettingsUI();
-      updateTodayUI();
-
-      // always splash first
-      showSplash();
-      openTab('today');
-
-      updateBedtimeCountdown();
-      setInterval(updateBedtimeCountdown, 1000);
-    }
-
-    boot();
+    // init
+    loadData();
+    updateSettingsUI();
+    updateTodayUI();
+    startCountdown();
   </script>
 </body>
 </html>
