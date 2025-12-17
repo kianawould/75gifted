@@ -19,7 +19,7 @@
   <!-- font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;600;900&display=swap" rel="stylesheet">
 
   <link rel="manifest" id="manifest-link" href="#" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -103,7 +103,7 @@
       font-weight:900;
       letter-spacing:-1px;
       text-transform:uppercase;
-      color:var(--accent);
+      color:#eda8ee(--accent);
     }
     .splash-sub{
       margin-top:10px;
@@ -111,7 +111,7 @@
       color:var(--muted);
       text-transform:lowercase;
       line-height:1.5;
-      font-weight:800;
+      font-weight:600;
     }
     .splash-actions{
       display:flex;
@@ -171,7 +171,7 @@
       font-size:12px;
       color:var(--muted);
       text-transform:lowercase;
-      font-weight:800;
+      font-weight:600;
     }
 
     .tab-nav{
@@ -254,7 +254,7 @@
       color:var(--muted);
       margin-top:6px;
       letter-spacing:1px;
-      font-weight:800;
+      font-weight:600;
     }
     .tasks-left{
       margin-top:10px;
@@ -269,7 +269,7 @@
       color:var(--muted);
       text-transform:lowercase;
       margin:10px 0 16px;
-      font-weight:800;
+      font-weight:600;
     }
 
     canvas{ width:100%; height:190px; display:block; }
@@ -341,7 +341,7 @@
       font-size:15px;
       color:#fff;
       text-transform:lowercase;
-      font-weight:800;
+      font-weight:600;
       line-height:1.25;
       letter-spacing:-0.2px;
     }
@@ -375,7 +375,7 @@
       color:var(--muted);
       margin:10px 0 12px;
       text-transform:lowercase;
-      font-weight:800;
+      font-weight:600;
     }
 
     .btn{
@@ -584,7 +584,7 @@
     }
     .share-sub{
       color:rgba(255,255,255,0.85);
-      font-weight:800;
+      font-weight:600;
       font-size:12px;
       margin-top:2px;
       text-transform:lowercase;
@@ -621,7 +621,7 @@
       line-height:1.4;
       color:rgba(255,255,255,0.75);
       text-transform:lowercase;
-      font-weight:800;
+      font-weight:600;
       border-top:1px solid rgba(255,255,255,0.14);
       padding-top:10px;
     }
@@ -783,7 +783,7 @@
 
   // typography
   ctx.fillStyle = '#e2f2aa';
-  ctx.font = '800 68px Montserrat, system-ui, -apple-system, sans-serif';
+  ctx.font = '600 68px Montserrat, system-ui, -apple-system, sans-serif';
   ctx.textAlign = 'center';
   ctx.fillText(title, W / 2, 140);
 
@@ -804,7 +804,7 @@
     ctx.stroke();
 
     ctx.fillStyle = '#e2f2aa';
-    ctx.font = '800 46px Montserrat, system-ui, -apple-system, sans-serif';
+    ctx.font = '600 46px Montserrat, system-ui, -apple-system, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(String(value), x + pw/2, y + 62);
 
@@ -854,7 +854,7 @@
   wrapText(ctx, rulesSmall, 130, 1635, 820, 34);
 
   ctx.fillStyle = '#e2f2aa';
-  ctx.font = '800 30px Montserrat, system-ui, -apple-system, sans-serif';
+  ctx.font = '600 30px Montserrat, system-ui, -apple-system, sans-serif';
   ctx.textAlign = 'center';
   ctx.fillText('stay gifted.', W/2, 1790);
 
@@ -976,12 +976,9 @@ document.getElementById('share-progress-btn').addEventListener('click', () => {
           <div class="form-group">
             <div class="toggle-wrapper">
               <label class="form-label" style="margin-bottom:0;">reminders</label>
-              <div class="toggle" id="reminders-toggle" role="switch" aria-label="reminders toggle">
-                <div class="toggle-slider"></div>
-              </div>
             </div>
 
-            <div style="margin-top:10px; font-size:12px; color:rgba(255,255,255,0.70); text-transform:lowercase; font-weight:800;">
+            <div style="margin-top:10px; font-size:12px; color:rgba(255,255,255,0.70); text-transform:lowercase; font-weight:600;">
               add calendar reminders (brownie points if you set them for daily reminder)
             </div>
 
@@ -1090,7 +1087,7 @@ document.getElementById('share-progress-btn').addEventListener('click', () => {
         wakeupTime: '06:00',
         bedtime: '22:00',
         bodyWeight: 150,
-        reminders: false,
+        : false,
         dailyGift: '',
         vicesText: ''
       },
@@ -1311,9 +1308,6 @@ document.getElementById('share-progress-btn').addEventListener('click', () => {
       document.getElementById('vices-text').value = appState.settings.vicesText || '';
 
       document.getElementById('computed-water').textContent = `${waterTargetOz()} oz (half bw + 8)`;
-
-      const toggle = document.getElementById('reminders-toggle');
-      toggle.classList.toggle('active', !!appState.settings.reminders);
 
       updateCalendarLinks();
     }
