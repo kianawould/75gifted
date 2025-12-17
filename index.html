@@ -749,10 +749,8 @@
         <div class="bedtime-reminder" id="bedtime-reminder"></div>
 
         <div class="btn-row" style="margin-bottom:10px;">
-          <button class="btn secondary" id="share-progress-btn">share today</button>async function buildStoryImageBlob() {
-  // story dimensions (instagram recommended)
-  const W = 1080;
-  const H = 1920;
+       async function buildStoryImageBlob() {
+  const W = 1080, H = 1920;
 
   const title = '75 GIFTED';
   const subtitle = 'a 75 day spiritual discipline challenge';
@@ -761,39 +759,65 @@
   const longest = appState.longestStreak || 0;
   const wins = appState.history.filter(h => h.completed).length;
 
-  // grab chart pixels from your existing canvas
   const chartCanvas = document.getElementById('streak-chart');
+  if (!chartCanvas) return null;
 
-  // make a new offscreen canvas for the "story"
   const c = document.createElement('canvas');
-  c.width = W;
-  c.height = H;
+  c.width = W; c.height = H;
   const ctx = c.getContext('2d');
 
-  // background gradient (match your app)
+  // background
   const grad = ctx.createLinearGradient(0, 0, W, H);
   grad.addColorStop(0, '#88b43a');
   grad.addColorStop(1, '#6f9b23');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
 
-  // subtle overlay for depth
   ctx.fillStyle = 'rgba(0,0,0,0.10)';
   ctx.fillRect(0, 0, W, H);
 
-  // typography
-  ctx.fillStyle = '#e2f2aa';
-  ctx.font = '600 68px Montserrat, system-ui, -apple-system, sans-serif';
+  // title
   ctx.textAlign = 'center';
+  ctx.fillStyle = '#e2f2aa';
+  ctx.font = '800 68px Montserrat, system-ui, -apple-system, sans-serif';
   ctx.fillText(title, W / 2, 140);
 
   ctx.fillStyle = '#eda8ee';
   ctx.font = '600 30px Montserrat, system-ui, -apple-system, sans-serif';
   ctx.fillText(subtitle, W / 2, 195);
 
+  function roundRect(ctx, x, y, w, h, r) {
+    const rr = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + rr, y);
+    ctx.arcTo(x + w, y, x + w, y + h, rr);
+    ctx.arcTo(x + w, y + h, x, y + h, rr);
+    ctx.arcTo(x, y + h, x, y, rr);
+    ctx.arcTo(x, y, x + w, y, rr);
+    ctx.closePath();
+  }
+
+  function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+    const words = (text || '').split(' ');
+    let line = '';
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + ' ';
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && n > 0) {
+        ctx.fillText(line.trim(), x, y);
+        line = words[n] + ' ';
+        y += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    ctx.fillText(line.trim(), x, y);
+  }
+
   // stat pills
   function pill(x, y, label, value) {
     const pw = 300, ph = 110, r = 26;
+
     ctx.fillStyle = 'rgba(255,255,255,0.10)';
     roundRect(ctx, x, y, pw, ph, r);
     ctx.fill();
@@ -804,13 +828,13 @@
     ctx.stroke();
 
     ctx.fillStyle = '#e2f2aa';
-    ctx.font = '600 46px Montserrat, system-ui, -apple-system, sans-serif';
+    ctx.font = '800 46px Montserrat, system-ui, -apple-system, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText(String(value), x + pw/2, y + 62);
+    ctx.fillText(String(value), x + pw / 2, y + 62);
 
     ctx.fillStyle = '#eda8ee';
     ctx.font = '600 22px Montserrat, system-ui, -apple-system, sans-serif';
-    ctx.fillText(label, x + pw/2, y + 96);
+    ctx.fillText(label, x + pw / 2, y + 96);
   }
 
   pill(90, 250, 'current', streak);
@@ -828,18 +852,16 @@
   roundRect(ctx, cardX, cardY, cardW, cardH, 28);
   ctx.stroke();
 
-  // draw chart scaled into the card
-  // (chartCanvas is device-scaled; drawImage handles it fine)
-  ctx.save();
   const padding = 30;
   ctx.globalAlpha = 0.98;
-  ctx.drawImage(chartCanvas, cardX + padding, cardY + padding, cardW - padding*2, cardH - padding*2);
-  ctx.restore();
+  ctx.drawImage(chartCanvas, cardX + padding, cardY + padding, cardW - padding * 2, cardH - padding * 2);
+  ctx.globalAlpha = 1;
 
   // footer rules
   ctx.fillStyle = 'rgba(255,255,255,0.08)';
   roundRect(ctx, 90, 1520, 900, 250, 28);
   ctx.fill();
+
   ctx.strokeStyle = 'rgba(237,168,238,0.18)';
   ctx.lineWidth = 3;
   roundRect(ctx, 90, 1520, 900, 250, 28);
@@ -848,46 +870,17 @@
   ctx.fillStyle = '#eda8ee';
   ctx.font = '700 28px Montserrat, system-ui, -apple-system, sans-serif';
   ctx.textAlign = 'left';
-  ctx.fillText('today’s progress', 130, 1585);
+  ctx.fillText("today’s progress", 130, 1585);
 
   ctx.font = '600 24px Montserrat, system-ui, -apple-system, sans-serif';
   wrapText(ctx, rulesSmall, 130, 1635, 820, 34);
 
   ctx.fillStyle = '#e2f2aa';
-  ctx.font = '600 30px Montserrat, system-ui, -apple-system, sans-serif';
+  ctx.font = '800 30px Montserrat, system-ui, -apple-system, sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('stay gifted.', W/2, 1790);
+  ctx.fillText('stay gifted.', W / 2, 1790);
 
-  // turn into blob for sharing
   return await new Promise((resolve) => c.toBlob(resolve, 'image/png', 1));
-}
-
-function roundRect(ctx, x, y, w, h, r) {
-  const rr = Math.min(r, w/2, h/2);
-  ctx.beginPath();
-  ctx.moveTo(x+rr, y);
-  ctx.arcTo(x+w, y, x+w, y+h, rr);
-  ctx.arcTo(x+w, y+h, x, y+h, rr);
-  ctx.arcTo(x, y+h, x, y, rr);
-  ctx.arcTo(x, y, x+w, y, rr);
-  ctx.closePath();
-}
-
-function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-  const words = (text || '').split(' ');
-  let line = '';
-  for (let n = 0; n < words.length; n++) {
-    const testLine = line + words[n] + ' ';
-    const metrics = ctx.measureText(testLine);
-    if (metrics.width > maxWidth && n > 0) {
-      ctx.fillText(line.trim(), x, y);
-      line = words[n] + ' ';
-      y += lineHeight;
-    } else {
-      line = testLine;
-    }
-  }
-  ctx.fillText(line.trim(), x, y);
 }
 
 async function shareToInstagramStoryViaShareSheet() {
@@ -899,7 +892,7 @@ async function shareToInstagramStoryViaShareSheet() {
 
   const file = new File([blob], '75-gifted-today.png', { type: 'image/png' });
 
-  // best-case: native share sheet (user selects instagram → story)
+  // best case: phone share sheet → user selects instagram → story
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     try {
       await navigator.share({
@@ -909,11 +902,11 @@ async function shareToInstagramStoryViaShareSheet() {
       });
       return;
     } catch (e) {
-      // user cancelled or share failed; fall through to download
+      // user cancelled or share failed, fall through
     }
   }
 
-  // fallback: download image + tell them to upload to story
+  // fallback: download
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -921,15 +914,16 @@ async function shareToInstagramStoryViaShareSheet() {
   document.body.appendChild(a);
   a.click();
   a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  setTimeout(() => URL.revokeObjectURL(url), 800);
 
-  showModal('📲', 'saved for story', 'your image downloaded. upload it to your instagram story from your camera roll.');
+  showModal('📲', 'saved for story', 'image downloaded. upload it to your instagram story from your camera roll.');
 }
 
-// hook your button
-document.getElementById('share-progress-btn').addEventListener('click', () => {
+// hook up the button (make sure the id matches your html)
+document.getElementById('share-progress-btn')?.addEventListener('click', () => {
   shareToInstagramStoryViaShareSheet();
 });
+
 
           <button class="btn primary" id="end-day-btn">end day</button>
         </div>
